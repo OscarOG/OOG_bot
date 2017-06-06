@@ -1,6 +1,4 @@
-*-----------------------------------------------------------------------*
-| BOTs for HL1 MOD Contra-Force 1.4b. Based on Jeffrey´s HPB Bots v3.0 . |
-*-----------------------------------------------------------------------*
+<b>BOTs for HL1 MOD Contra-Force 1.4b. Based on Jeffrey´s HPB Bots v3.0 .</b>
 
 I´m a Half-Life fan and one of the multiple MODs i loved to play is Contra-Force.
 
