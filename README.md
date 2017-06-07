@@ -22,7 +22,7 @@ always crashed the MOD when trying to add bots so i look for a more basic versio
 of the bots, like the HBP Bots v3.0 (non metamod).
 
 After some copy & paste and various code modifications, it seems i got the most
-approaching to a bot i can have, at least, no game crash!
+approaching to a bot i can have, at least no game crash!
 
 I want to share this to those posible interested and those that may help me make
 a decent bots to this MOD, either this version or a metamod one.
