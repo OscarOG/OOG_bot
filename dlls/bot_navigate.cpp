@@ -225,8 +225,7 @@ float BotChangeYaw( bot_t *pBot, float speed )
    return diff;  // return number of degrees left to turn
 }
 
-
-bool BotFindWaypoint( bot_t *pBot )	//	MARCADOR - WAYPOINT
+bool BotFindWaypoint( bot_t *pBot )
 {
    int index, select_index;
    int team;
@@ -250,6 +249,11 @@ bool BotFindWaypoint( bot_t *pBot )	//	MARCADOR - WAYPOINT
 
    index = WaypointFindPath(&pPath, &path_index, pBot->curr_waypoint_index, team);
 
+   if ((mod_id == CONFORCE_DLL) && (num_waypoints <= 0))
+   {
+	   BotFindNodes(pBot);
+   }
+   
    while (index != -1)
    {
       // if index is not a current or recent previous waypoint...
