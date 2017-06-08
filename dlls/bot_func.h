@@ -22,6 +22,7 @@ void BotPickLogo(bot_t *pBot);
 void BotSprayLogo(edict_t *pEntity, char *logo_name);
 void BotFindItem( bot_t *pBot );
 void BotLookForEnemy( bot_t *pBot );
+void BotFindNodes( bot_t *pBot );
 bool BotLookForMedic( bot_t *pBot );
 bool BotLookForGrenades( bot_t *pBot );
 void BotThink( bot_t *pBot );
