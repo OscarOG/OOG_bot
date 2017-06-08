@@ -1100,81 +1100,81 @@ void BotLookForEnemy(bot_t *pBot)
 	}
 }
 
-void BotFindNodes(bot_t *pBot)
+// it is posible to navigate without waypoints?
+void BotFindNodes(bot_t *pBot) // let´s experiment...
 {
 	edict_t *pent = NULL;
-    edict_t *pPickupEntity = NULL;
-	edict_t *pEdict = pBot->pEdict;
+    	edict_t *pPickupEntity = NULL;
+    	edict_t *pEdict = pBot->pEdict;
 
-    Vector pickup_origin;
-    Vector entity_origin;
-	Vector vecStart;
-	Vector vecEnd;
+    	Vector pickup_origin;
+    	Vector entity_origin;
+    	Vector vecStart;
+    	Vector vecEnd;
 
-    float radius = 500;
-    bool can_pickup;
-    float min_distance;
-    char item_name[40];
-	int angle_to_entity;
+    	float radius = 500;
+    	bool can_pickup;
+    	float min_distance;
+    	char item_name[40];
+    	int angle_to_entity;
 
-    TraceResult tr;
+    	TraceResult tr;
 
-    min_distance = radius + 1.0;
+    	min_distance = radius + 1.0;
 
-    pBot->pBotPickupItem = NULL;
+    	pBot->pBotPickupItem = NULL;
    
-    while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-    {
-	   can_pickup = FALSE;
+    	while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
+	{
+		can_pickup = FALSE; // init
 	   
-	   strcpy(item_name, STRING(pent->v.classname));
+       		strcpy(item_name, STRING(pent->v.classname));
 	   
-	   entity_origin = pent->v.origin;
+       		entity_origin = pent->v.origin;
 	   
-	   vecStart = pEdict->v.origin + pEdict->v.view_ofs;
-       vecEnd = entity_origin;
+       		vecStart = pEdict->v.origin + pEdict->v.view_ofs;
+       		vecEnd = entity_origin;
 
-       // find angles from bot origin to entity...
-       angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
+       		// find angles from bot origin to entity...
+       		angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
 	   
-	   // check if entity is outside field of view (+/- 45 degrees)
-       if (angle_to_entity > 45)
-          continue;  // skip this item if bot can't "see" it
+       		// check if entity is outside field of view (+/- 45 degrees)
+       		if (angle_to_entity > 45)
+			continue;  // skip this item if bot can't "see" it
 	  
-	   // check if line of sight to object is not blocked (i.e. visible)
-       if (BotEntityIsVisible( pBot, vecEnd ))
-	   {
-		   if ((strcmp("info_node", item_name) == 0) ||
-			   (strcmp("trigger_changelevel", item_name) == 0))
-		   {
-			   can_pickup = TRUE;
-		   }
-	   }
-	   if (can_pickup) // if the bot found something it can pickup...
-	   {
-		   float distance = (entity_origin - pEdict->v.origin).Length( );
+       		// check if line of sight to object is not blocked (i.e. visible)
+       		if (BotEntityIsVisible( pBot, vecEnd ))
+       		{
+			if ((strcmp("info_node", item_name) == 0) ||
+			    (strcmp("trigger_changelevel", item_name) == 0))
+			{
+				can_pickup = TRUE; // force bot to go there
+			}
+		}
+       		if (can_pickup) // i know it´s not pickable but go there anyway
+		{
+			float distance = (entity_origin - pEdict->v.origin).Length( );
 
-		   // see if it's the closest item so far...
-           if (distance < min_distance)
-		   {
-			   min_distance = distance;        // update the minimum distance
-			   pPickupEntity = pent;		   // remember this entity
-               pickup_origin = entity_origin;  // remember location of entity
-		   }
-	   }
-	   if (pPickupEntity != NULL)
-	   {
-		   // let's head off toward that item...
-           Vector v_item = pickup_origin - pEdict->v.origin;
+	   		// see if it's the closest item so far...
+           		if (distance < min_distance)
+			{
+				min_distance = distance;        // update the minimum distance
+			   	pPickupEntity = pent;		// remember this entity
+               			pickup_origin = entity_origin;  // remember location of entity
+			}
+		}
+		if (pPickupEntity != NULL)
+		{
+			// let's head off toward that item...
+           		Vector v_item = pickup_origin - pEdict->v.origin;
+			Vector bot_angles = UTIL_VecToAngles( v_item );
 
-           Vector bot_angles = UTIL_VecToAngles( v_item );
+           		pEdict->v.ideal_yaw = bot_angles.y;
 
-           pEdict->v.ideal_yaw = bot_angles.y;
+           		BotFixIdealYaw(pEdict);
 
-           BotFixIdealYaw(pEdict);
-
-           pBot->pBotPickupItem = pPickupEntity;  // save the item bot is trying to get
-	   }
+           		pBot->pBotPickupItem = pPickupEntity;  // save the item bot is trying to get
+		}
 	}
 }
 
