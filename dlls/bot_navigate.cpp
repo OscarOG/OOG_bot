@@ -251,7 +251,8 @@ bool BotFindWaypoint( bot_t *pBot )
 
    if ((mod_id == CONFORCE_DLL) && (num_waypoints <= 0))
    {
-	   BotFindNodes(pBot);
+      // Trying to navigate when no waypoints
+      BotFindNodes(pBot);
    }
    
    while (index != -1)
