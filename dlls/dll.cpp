@@ -1568,7 +1568,7 @@ void StartFrame( void )
             // respawn 1 bot then wait a while (otherwise engine crashes)
             if ((mod_id == VALVE_DLL) ||
                 ((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect == NULL)) ||
-                (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL) || (mod_id == CONFORCE_DLL))
+                (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL))
             {
                char c_skill[2];
                char c_topcolor[4];
@@ -1580,6 +1580,18 @@ void StartFrame( void )
                
                BotCreate(NULL, bots[index].skin, bots[index].name, c_skill, c_topcolor, c_bottomcolor);
             }
+			else if (mod_id == CONFORCE_DLL)
+			{
+				char c_skill[2];
+                char c_topcolor[4];
+                char c_bottomcolor[4];
+
+                sprintf(c_skill, "%d", bots[index].bot_skill);
+                sprintf(c_topcolor, "%d", bots[index].top_color);
+                sprintf(c_bottomcolor, "%d", bots[index].bottom_color);
+               
+                BotCreate(NULL, bots[index].skin, bots[index].name, "1", NULL, NULL);
+			}
             else
             {
                char c_skill[2];

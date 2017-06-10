@@ -28,6 +28,7 @@ int number_skins;
 #define VALVE_MAX_SKINS     10
 #define GEARBOX_MAX_SKINS   20
 #define HOLYWARS_MAX_SKINS   5
+#define CONFORCE_MAX_SKINS   3
 
 extern int mod_id;
 
@@ -44,6 +45,9 @@ char *gearbox_bot_models[GEARBOX_MAX_SKINS] = {
 char *holywars_bot_models[HOLYWARS_MAX_SKINS] = {
    "akedo", "bad", "barney", "gordon", "helmet"};
 
+char *conforce_bot_models[CONFORCE_MAX_SKINS] = {
+   "jaguar", "shark", "wolf"};
+
 // default names for each of the above player models...
 char *valve_bot_names[VALVE_MAX_SKINS] = {
    "Barney", "Gina", "G-Man", "Gordon", "Helmet",
@@ -56,6 +60,9 @@ char *gearbox_bot_names[GEARBOX_MAX_SKINS] = {
 
 char *holywars_bot_names[HOLYWARS_MAX_SKINS] = {
    "Akedo", "B.A.D.", "Barney", "Gordon", "Helmet"};
+
+char *conforce_bot_names[CONFORCE_MAX_SKINS] = {
+   "Jaguar", "Shark", "Wolf"};
 
 
 #ifndef __linux__
@@ -204,6 +211,16 @@ void LoadBotModels(void)
       {
          strcpy(bot_skins[index].model_name, holywars_bot_models[index]);
          strcpy(bot_skins[index].bot_name, holywars_bot_names[index]);
+      }
+   }
+   else if (mod_id == CONFORCE_DLL)
+   {
+	   number_skins = CONFORCE_MAX_SKINS;
+
+      for (index=0; index < CONFORCE_MAX_SKINS; index++)
+      {
+         strcpy(bot_skins[index].model_name, conforce_bot_models[index]);
+         strcpy(bot_skins[index].bot_name, conforce_bot_names[index]);
       }
    }
 

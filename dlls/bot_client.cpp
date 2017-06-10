@@ -121,11 +121,11 @@ void BotClient_CF_ShowMenu(void *p, int bot_index)
 void BotClient_CF_BarterArea(void *p, int bot_index)
 {
 	static int state = 0;   // current state machine state
-	static int in_barter_area;
+	static bool in_barter_area;
 
-	bots[bot_index].in_barter_area = *(int *)p;
+	bots[bot_index].in_barter_area = *(bool *)p;
 
-	if (bots[bot_index].in_barter_area == 1)
+	if (bots[bot_index].in_barter_area == TRUE)
 
 		bots[bot_index].start_action = MSG_CF_BARTER_AREA;
 }

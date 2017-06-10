@@ -225,6 +225,75 @@ float BotChangeYaw( bot_t *pBot, float speed )
    return diff;  // return number of degrees left to turn
 }
 
+void BotFindNode(bot_t *pBot)
+{
+	edict_t *pent = NULL;
+    edict_t *pPickupEntity = NULL;
+	edict_t *pEdict = pBot->pEdict;
+	
+	Vector pickup_origin;
+    Vector node_origin;
+	Vector node_dest;
+	Vector vecStart;
+	Vector vecEnd;
+	Vector v_node;
+	Vector bot_angles;
+
+	float radius = 600;
+	float distance;
+	float min_distance;
+	bool should_go = NULL;
+	int angle_to_entity;
+
+	TraceResult tr;
+	
+	min_distance = radius + 1.0;
+	
+	pBot->pBotPickupItem = NULL;
+	
+	while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
+	{
+		should_go = FALSE;
+		
+		vecStart = pEdict->v.origin;
+		vecEnd = pent->v.origin;
+		
+		// find angles from bot origin to entity...
+		angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
+		
+		if ((strcmp(STRING(pent->v.classname), "info_node") == 0) ||
+			(strcmp(STRING(pent->v.classname), "trigger_changelevel")))
+		{
+			if (BotEntityIsVisible( pBot, vecEnd ))
+			{
+				should_go = TRUE;
+			}
+		}
+
+		if (should_go)
+		{
+			distance = (vecEnd - vecStart).Length( );
+			
+			// see if it's the closest item so far...
+			if (distance < min_distance)
+			{
+				min_distance = distance;	// update the minimum distance
+				pPickupEntity = pent;		// remember this entity
+				pickup_origin = vecEnd;  	// remember location of entity
+
+				if (pPickupEntity != NULL)
+				{
+					v_node = pickup_origin - vecStart;
+					bot_angles = UTIL_VecToAngles( v_node );
+					pEdict->v.ideal_yaw = bot_angles.y;
+					BotFixIdealYaw(pEdict);
+					pBot->pBotPickupItem = pPickupEntity;
+				}
+			}
+		}
+	}
+}
+
 bool BotFindWaypoint( bot_t *pBot )
 {
    int index, select_index;
@@ -249,10 +318,10 @@ bool BotFindWaypoint( bot_t *pBot )
 
    index = WaypointFindPath(&pPath, &path_index, pBot->curr_waypoint_index, team);
 
-   if ((mod_id == CONFORCE_DLL) && (num_waypoints <= 0))
+   if (num_waypoints <= 0)
+//   if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
    {
-      // Trying to navigate when no waypoints
-      BotFindNodes(pBot);
+	   BotFindNode(pBot);
    }
    
    while (index != -1)
@@ -603,6 +672,11 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
             pBot->waypoint_goal = -1;
          }
       }
+   }
+   else if (num_waypoints <= 0)
+//   else if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
+   {
+	   BotFindNode(pBot);
    }
 
    // check if we need to find a waypoint...

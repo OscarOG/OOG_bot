@@ -325,17 +325,19 @@ bot_weapon_select_t cf_weapon_select[] = {
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_HK33ZF, "weapon_hk33zf", 5, 50.0, 9999.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_MINIMI, "weapon_minimi", 5, 10.0, 800.0, 0.0, 0.0,
+	{CF_WEAPON_MINIMI, "weapon_minimi", 5, 0.0, 800.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_CAR15M203, "weapon_car15m203", 5, 50.0, 500.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M629, "weapon_m629", 5, 10.0, 1000.0, 0.0, 0.0,
+	{CF_WEAPON_M629, "weapon_m629", 5, 0.0, 1000.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_N213, "weapon_n213", 5, 0.0, 1200.0, 0.0, 0.0,
+    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_MK2GRENADE, "weapon_mk2grenade", 5, 200.0, 700.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_M67GRENADE, "weapon_m67grenade", 5, 200.0, 700.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_TYPE56, "weapon_type56", 5, 20.0, 1200.0, 0.0, 0.0,
+	{CF_WEAPON_TYPE56, "weapon_type56", 5, 0.0, 1200.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 300.0, 0.0, 0.0,
     100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
@@ -345,8 +347,6 @@ bot_weapon_select_t cf_weapon_select[] = {
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_M72A1, "weapon_m72a1", 5, 200.0, 2000.0, 0.0, 0.0,
     90, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_N213, "weapon_n213", 5, 10.0, 1200.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_KNIFE, "weapon_knife", 5, 0.0, 50.0, 0.0, 0.0,
     100, TRUE, 100, 0, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
 	{CF_WEAPON_AR50, "weapon_ar50", 5, 100.0, 9999.0, 0.0, 0.0,
@@ -723,6 +723,9 @@ bot_fire_delay_t cf_fire_delay[] = {
 	{CF_WEAPON_M629,
     0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+	{CF_WEAPON_N213,
+    0.1, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
 	{CF_WEAPON_MK2GRENADE,
     0.6, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.5, 0.7},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
@@ -744,9 +747,6 @@ bot_fire_delay_t cf_fire_delay[] = {
 	{CF_WEAPON_M72A1,
     0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-	{CF_WEAPON_N213,
-    0.3, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
-    0.2, {0.0, 0.0, 0.1, 0.1, 0.2}, {0.1, 0.1, 0.2, 0.2, 0.4}},
     {CF_WEAPON_KNIFE,
     0.3, {0.0, 0.2, 0.3, 0.4, 0.6}, {0.1, 0.3, 0.5, 0.7, 1.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
@@ -881,56 +881,6 @@ edict_t *BotFindEnemy( bot_t *pBot )
 
             return (pBot->pBotEnemy);
          }
-/*		 else if (mod_id == CONFORCE_DLL)
-		 {
-			edict_t *pent = NULL;
-			Vector pickup_origin;
-			Vector entity_origin;
-			float radius = 500;
-			float min_distance;
-			char item_name[40];
-			TraceResult tr;
-			Vector vecStart;
-			Vector vecEnd;
-//			int angle_to_entity;
-			edict_t *pEdict = pBot->pEdict;
-	
-			if ((num_waypoints > 0) && (pBot->curr_waypoint_index != -1))
-				radius = 200.0;
-			else
-				radius = 500.0;
-
-			min_distance = radius + 1.0;
-
-			while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-			{
-				strcpy(item_name, STRING(pent->v.classname));
-
-				if ((strcmp(STRING(pent->v.classname), "player") == 0) ||
-					(strcmp(STRING(pent->v.classname), "pBot") == 0))
-				{
-					//continue;
-					 pBot->pBotEnemy = NULL;
-				}
-				else if (strncmp("monster_", item_name, 8) == 0)
-				{
-					if ((strcmp(STRING(pent->v.classname), "monster_barney") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_scientist") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_barney_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_barry_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_sentry") == 0))
-					{
-						//continue;
-						pBot->pBotEnemy = NULL;
-					}
-					else
-					{
-						return (pBot->pBotEnemy);
-						//	CODE GOES HERE
-					}
-				}
-			}
-		 }	*/
          else  // enemy has gone out of bot's line of sight
          {
             // check if waiting to throw grenade...
@@ -1117,12 +1067,7 @@ edict_t *BotFindEnemy( bot_t *pBot )
          }
       }
    }
-   /*
-   else if (mod_id == CONFORCE_DLL)
-   {
-	   BotLookForEnemy(pBot);
-   }
-*/
+  
    if (pNewEnemy == NULL)
    {
       Vector vecEnd;

@@ -698,6 +698,8 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
          pBot->start_action = MSG_OPFOR_IDLE;
       else if (mod_id == FRONTLINE_DLL)
          pBot->start_action = MSG_FLF_IDLE;
+/*	  else if (mod_id == CONFORCE_DLL)
+         pBot->start_action = MSG_CF_BARTER_AREA;	*/
       else
          pBot->start_action = 0;  // not needed for non-team MODs
 
@@ -1006,12 +1008,12 @@ void BotLookForEnemy(bot_t *pBot)
 	edict_t *pEdict = pBot->pEdict;
 
 	float radius;
-	float distance;
+//	float distance;
 	float min_distance;
 	bool is_enemy = NULL;
-	int angle_to_entity;
+//	int angle_to_entity;
 
-	char item_name[40];
+//	char item_name[40];
 
 	TraceResult tr;
 
@@ -1032,148 +1034,51 @@ void BotLookForEnemy(bot_t *pBot)
 	{
 		while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
 		{
-			strcpy(item_name, STRING(pent->v.classname));
 
-			entity_origin = pent->v.origin;
-
-			vecStart = pEdict->v.origin + pEdict->v.view_ofs;
-			vecEnd = entity_origin;
-
-			distance = (vecEnd - vecStart).Length( );
-			angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
-
-			if ((angle_to_entity > 45) || (pent->v.effects & EF_NODRAW))
-				continue;
-
-			if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
+			if ((strcmp(STRING(pent->v.classname), "monster_alien_controller") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_alien_grunt") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_alien_slave") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_apache") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_babycrab") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_barnacle") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_barry") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_bigmomma") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_bullchicken") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_gargantua") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_grunt_repel") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_headcrab") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_houndeye") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_assassin") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_assassin2") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_communism") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_grunt") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_ichthyosaur") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_kingpin") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_miniturret") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_nihilanth") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_nihilith") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_osprey") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_panthereye") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_sentry") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_turret") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_zombie") == 0))
 			{
-				if ((strcmp(STRING(pent->v.classname), "player") == 0) ||
-					(strcmp(STRING(pent->v.classname), "pBot") == 0) ||
-					(strcmp(STRING(pent->v.classname), "worldspawn") == 0))	// bots are attacking walls sometimes!
-				{
-					continue;
-				}
-				else if (strncmp("monster_", item_name, 8) == 0)
-				{
-					if ((strcmp(STRING(pent->v.classname), "monster_barney") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_scientist") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_barney_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_scientist_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_sitting_scientist") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_barry_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_cockroach") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_hevsuit_dead") == 0) ||
-						(strcmp(STRING(pent->v.classname), "monster_hgrunt_dead") == 0))
-					{
-						continue;
-					}
-					else
-					{
-						is_enemy = TRUE;	//	enemy found!
-					}
-				}
+				is_enemy = TRUE;
+			}
+			else 
+			{
+				continue;
 			}
 			if (is_enemy)
 			{
-				UTIL_TraceLine( vecStart, vecEnd, dont_ignore_monsters,
-								pEdict->v.pContainingEntity, &tr);
-				
-				// face the enemy
-				v_enemy = pent->v.origin - pEdict->v.origin;
-				bot_angles = UTIL_VecToAngles( v_enemy );
+				vecEnd = pent->v.origin;
 
-				pEdict->v.ideal_yaw = bot_angles.y;
-
-				BotFixIdealYaw(pEdict);
-
-				// check if traced all the way up to the entity (didn't hit wall)
-				if (strcmp(item_name, STRING(tr.pHit->v.classname)) == 0)
+				if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
 				{
-					if ((angle_to_entity <= 10))
-					{
-						pBot->pBotEnemy = pent;
-						pBot->f_pause_time = 0;
-					}
+					pBot->pBotEnemy = pent;
+					pBot->f_pause_time = 0;
 				}
 			}
-		}
-	}
-}
-
-// it is posible to navigate without waypoints?
-void BotFindNodes(bot_t *pBot) // let´s experiment...
-{
-	edict_t *pent = NULL;
-    	edict_t *pPickupEntity = NULL;
-    	edict_t *pEdict = pBot->pEdict;
-
-    	Vector pickup_origin;
-    	Vector entity_origin;
-    	Vector vecStart;
-    	Vector vecEnd;
-
-    	float radius = 500;
-    	bool can_pickup;
-    	float min_distance;
-    	char item_name[40];
-    	int angle_to_entity;
-
-    	TraceResult tr;
-
-    	min_distance = radius + 1.0;
-
-    	pBot->pBotPickupItem = NULL;
-   
-    	while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-	{
-		can_pickup = FALSE; // init
-	   
-       		strcpy(item_name, STRING(pent->v.classname));
-	   
-       		entity_origin = pent->v.origin;
-	   
-       		vecStart = pEdict->v.origin + pEdict->v.view_ofs;
-       		vecEnd = entity_origin;
-
-       		// find angles from bot origin to entity...
-       		angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
-	   
-       		// check if entity is outside field of view (+/- 45 degrees)
-       		if (angle_to_entity > 45)
-			continue;  // skip this item if bot can't "see" it
-	  
-       		// check if line of sight to object is not blocked (i.e. visible)
-       		if (BotEntityIsVisible( pBot, vecEnd ))
-       		{
-			if ((strcmp("info_node", item_name) == 0) ||
-			    (strcmp("trigger_changelevel", item_name) == 0))
-			{
-				can_pickup = TRUE; // force bot to go there
-			}
-		}
-       		if (can_pickup) // i know it´s not pickable but go there anyway
-		{
-			float distance = (entity_origin - pEdict->v.origin).Length( );
-
-	   		// see if it's the closest item so far...
-           		if (distance < min_distance)
-			{
-				min_distance = distance;        // update the minimum distance
-			   	pPickupEntity = pent;		// remember this entity
-               			pickup_origin = entity_origin;  // remember location of entity
-			}
-		}
-		if (pPickupEntity != NULL)
-		{
-			// let's head off toward that item...
-           		Vector v_item = pickup_origin - pEdict->v.origin;
-			Vector bot_angles = UTIL_VecToAngles( v_item );
-
-           		pEdict->v.ideal_yaw = bot_angles.y;
-
-           		BotFixIdealYaw(pEdict);
-
-           		pBot->pBotPickupItem = pPickupEntity;  // save the item bot is trying to get
 		}
 	}
 }

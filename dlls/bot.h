@@ -44,7 +44,8 @@ typedef void (*LINK_ENTITY_FUNC)(entvars_t *);
 #define FRONTLINE_DLL  5
 #define HOLYWARS_DLL   6
 #define DMC_DLL        7
-#define CONFORCE_DLL   8
+#define CONFORCE_DLL   8	//	contra-force
+#define BB_DLL		   9	//	brainbread
 
 
 // define some function prototypes...
@@ -327,7 +328,7 @@ typedef struct
    bot_current_weapon_t current_weapon;  // one current weapon for each bot
    int m_rgAmmo[MAX_AMMO_SLOTS];  // total ammo amounts (1 array for each bot)
 
-   int in_barter_area;
+   bool in_barter_area;	//	contra-force only (buy zone)
 
 } bot_t;
 

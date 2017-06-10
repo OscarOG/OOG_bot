@@ -266,28 +266,34 @@ void BotStartGame( bot_t *pBot )
       }
    }
    else if (mod_id == CONFORCE_DLL)
-   {
-	/*   if (pBot->start_action == MSG_CF_BARTER_AREA)
+   {	/*
+	   bool should_buy = NULL;
+
+	   if (pBot->start_action == MSG_CF_BARTER_AREA)
 	   {
-		   pBot->not_started = 1;
+		   //pBot->not_started = 1;
+		   should_buy = TRUE;
 	   }
 	   else
 	   {	
 		   pBot->not_started = 0;
-	   }	*/
+	   }
 
-	   FakeClientCommand(pEdict, "barter", NULL, NULL);
+	   if (should_buy)
+	   {
+		   FakeClientCommand(pEdict, "barter", NULL, NULL);
+		   FakeClientCommand(pEdict, "menuselect", "1", NULL);
+		   FakeClientCommand(pEdict, "menuselect", "2", NULL);
+		   FakeClientCommand(pEdict, "menuselect", "3", NULL);
+		   
+		   FakeClientCommand(pEdict, "barter", NULL, NULL);
+		   FakeClientCommand(pEdict, "menuselect", "3", NULL);
+		   FakeClientCommand(pEdict, "menuselect", "2", NULL);
 
-	   FakeClientCommand(pEdict, "menuselect", "1", NULL);
-	   FakeClientCommand(pEdict, "menuselect", "2", NULL);
-	   FakeClientCommand(pEdict, "menuselect", "3", NULL);
-
-	   FakeClientCommand(pEdict, "barter", NULL, NULL);
-
-	   FakeClientCommand(pEdict, "menuselect", "3", NULL);
-	   FakeClientCommand(pEdict, "menuselect", "2", NULL);
-
-	   pBot->not_started = 0;
+		   should_buy = FALSE;	*/
+		   
+		   pBot->not_started = 0;
+//	   }
    }
    else if ((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect != NULL))
    {

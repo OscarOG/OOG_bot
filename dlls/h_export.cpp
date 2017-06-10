@@ -187,6 +187,13 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
       strcpy(game_dll_filename, "conforce\\dlls\\cf.dll");
 #endif
    }
+   else if (strcmpi(mod_name, "brainbread") == 0)
+   {
+      mod_id = BB_DLL;
+#ifndef __linux__
+      strcpy(game_dll_filename, "brainbread\\dlls\\bb.dll");
+#endif
+   }
 
    if (game_dll_filename[0])
    {
