@@ -266,7 +266,8 @@ void BotFindNode(bot_t *pBot)
 		{
 			if (BotEntityIsVisible( pBot, vecEnd ))
 			{
-				should_go = TRUE;
+				// should_go = TRUE;
+				pPickupEntity = pent;
 			}
 		}
 
@@ -280,18 +281,18 @@ void BotFindNode(bot_t *pBot)
 				min_distance = distance;	// update the minimum distance
 				pPickupEntity = pent;		// remember this entity
 				pickup_origin = vecEnd;  	// remember location of entity
-
-				if (pPickupEntity != NULL)
-				{
-					v_node = pickup_origin - vecStart;
-					bot_angles = UTIL_VecToAngles( v_node );
-					pEdict->v.ideal_yaw = bot_angles.y;
-					BotFixIdealYaw(pEdict);
-					pBot->pBotPickupItem = pPickupEntity;
-				}
 			}
 		}
 	}
+	if (pPickupEntity != NULL)
+   {
+      // let's head off toward that item...
+      v_node = pickup_origin - vecStart;
+      bot_angles = UTIL_VecToAngles( v_node );
+      pEdict->v.ideal_yaw = bot_angles.y;
+      BotFixIdealYaw(pEdict);
+      pBot->pBotPickupItem = pPickupEntity;  // save the item bot is trying to get
+   }
 }
 
 bool BotFindWaypoint( bot_t *pBot )
@@ -318,7 +319,7 @@ bool BotFindWaypoint( bot_t *pBot )
 
    index = WaypointFindPath(&pPath, &path_index, pBot->curr_waypoint_index, team);
 
-   if (num_waypoints <= 0)
+   if (num_waypoints == 0)
 //   if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
    {
 	   BotFindNode(pBot);

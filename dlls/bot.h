@@ -37,15 +37,16 @@ typedef void (*LINK_ENTITY_FUNC)(entvars_t *);
 
 // define constants used to identify the MOD we are playing...
 
-#define VALVE_DLL      1
-#define TFC_DLL        2
-#define CSTRIKE_DLL    3
-#define GEARBOX_DLL    4
-#define FRONTLINE_DLL  5
-#define HOLYWARS_DLL   6
-#define DMC_DLL        7
-#define CONFORCE_DLL   8	//	contra-force
-#define BB_DLL		   9	//	brainbread
+#define VALVE_DLL		1
+#define TFC_DLL			2
+#define CSTRIKE_DLL		3
+#define GEARBOX_DLL		4
+#define FRONTLINE_DLL	5
+#define HOLYWARS_DLL	6
+#define DMC_DLL			7
+#define CONFORCE_DLL	8	//	contra-force
+#define BB_DLL			9	//	brainbread
+#define SVEN_DLL		10	//	sven co-op
 
 
 // define some function prototypes...
@@ -235,6 +236,8 @@ typedef struct
    edict_t *pBotEnemy;
    float f_bot_see_enemy_time;
    float f_bot_find_enemy_time;
+
+   edict_t *pEntEnemy;	//	contra-force
 
    Vector v_enemy_previous_origin;
    float f_aim_tracking_time;

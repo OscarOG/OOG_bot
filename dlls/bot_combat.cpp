@@ -724,7 +724,7 @@ bot_fire_delay_t cf_fire_delay[] = {
     0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
 	{CF_WEAPON_N213,
-    0.1, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
+    0.15, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
 	{CF_WEAPON_MK2GRENADE,
     0.6, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.5, 0.7},
@@ -784,6 +784,91 @@ void BotCheckTeamplay(void)
    checked_teamplay = TRUE;
 }
 
+void BotLookForEnemy(bot_t *pBot)
+{
+	edict_t *pent = NULL;
+	edict_t *pNewEnemy = NULL;
+	edict_t *pEdict = pBot->pEdict;
+
+	pBot->pBotEnemy = NULL;
+
+	float radius;
+//	float distance;
+	float min_distance;
+	bool is_enemy = NULL;
+//	int angle_to_entity;
+
+//	char item_name[40];
+
+	TraceResult tr;
+
+	Vector entity_origin;
+	Vector vecStart;
+	Vector vecEnd;
+	Vector v_enemy;
+	Vector bot_angles;
+	
+	if ((num_waypoints > 0) && (pBot->curr_waypoint_index != -1))
+		radius = 800.0;
+	else
+		radius = 1200.0;
+
+	min_distance = radius + 1.0;
+
+	if (mod_id == CONFORCE_DLL)
+	{
+		while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
+		{
+
+			if ((strcmp(STRING(pent->v.classname), "monster_alien_controller") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_alien_grunt") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_alien_slave") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_apache") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_babycrab") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_barnacle") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_barry") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_bigmomma") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_bullchicken") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_gargantua") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_grunt_repel") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_headcrab") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_houndeye") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_assassin") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_assassin2") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_communism") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_human_grunt") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_ichthyosaur") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_kingpin") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_miniturret") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_nihilanth") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_nihilith") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_osprey") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_panthereye") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_sentry") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_turret") == 0) ||
+				(strcmp(STRING(pent->v.classname), "monster_zombie") == 0) ||
+				(strcmp(STRING(pent->v.classname), "func_breakable") == 0))
+			{
+				is_enemy = TRUE;
+			}
+			else 
+			{
+				continue;
+			}
+			if (is_enemy)
+			{
+				vecEnd = pent->v.origin;
+
+				if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
+				{
+					pBot->pBotEnemy = pent;
+					pNewEnemy = pent;
+					pBot->f_pause_time = 0;
+				}
+			}
+		}
+	}
+}
 
 edict_t *BotFindEnemy( bot_t *pBot )
 {

@@ -1002,87 +1002,6 @@ void BotSprayLogo(edict_t *pEntity, char *logo_name)
    }
 }
 
-void BotLookForEnemy(bot_t *pBot)
-{
-	edict_t *pent = NULL;
-	edict_t *pEdict = pBot->pEdict;
-
-	float radius;
-//	float distance;
-	float min_distance;
-	bool is_enemy = NULL;
-//	int angle_to_entity;
-
-//	char item_name[40];
-
-	TraceResult tr;
-
-	Vector entity_origin;
-	Vector vecStart;
-	Vector vecEnd;
-	Vector v_enemy;
-	Vector bot_angles;
-	
-	if ((num_waypoints > 0) && (pBot->curr_waypoint_index != -1))
-		radius = 800.0;
-	else
-		radius = 1200.0;
-
-	min_distance = radius + 1.0;
-
-	if (mod_id == CONFORCE_DLL)
-	{
-		while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-		{
-
-			if ((strcmp(STRING(pent->v.classname), "monster_alien_controller") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_alien_grunt") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_alien_slave") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_apache") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_babycrab") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_barnacle") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_barry") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_bigmomma") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_bullchicken") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_gargantua") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_grunt_repel") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_headcrab") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_houndeye") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_assassin") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_assassin2") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_communism") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_grunt") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_ichthyosaur") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_kingpin") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_miniturret") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_nihilanth") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_nihilith") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_osprey") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_panthereye") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_sentry") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_turret") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_zombie") == 0))
-			{
-				is_enemy = TRUE;
-			}
-			else 
-			{
-				continue;
-			}
-			if (is_enemy)
-			{
-				vecEnd = pent->v.origin;
-
-				if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
-				{
-					pBot->pBotEnemy = pent;
-					pBot->f_pause_time = 0;
-				}
-			}
-		}
-	}
-}
-
 void BotFindItem( bot_t *pBot )
 {
    edict_t *pent = NULL;
@@ -1290,6 +1209,11 @@ void BotFindItem( bot_t *pBot )
             }
          }
       }
+	  else if (strcmp("trigger_changelevel", item_name) == 0)
+	  {
+		  // can_pickup = TRUE;
+		  pPickupEntity = pent;
+	  }
       else  // everything else...
       {
          entity_origin = pent->v.origin;
