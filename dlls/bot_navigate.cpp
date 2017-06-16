@@ -261,13 +261,13 @@ void BotFindNode(bot_t *pBot)
 		// find angles from bot origin to entity...
 		angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
 		
-		if ((strcmp(STRING(pent->v.classname), "info_node") == 0) ||
-			(strcmp(STRING(pent->v.classname), "trigger_changelevel")))
+		if ((strcmp(STRING(pent->v.classname), "info_node") == 0))
 		{
 			if (BotEntityIsVisible( pBot, vecEnd ))
 			{
 				// should_go = TRUE;
 				pPickupEntity = pent;
+				pickup_origin = vecEnd;
 			}
 		}
 
@@ -287,7 +287,7 @@ void BotFindNode(bot_t *pBot)
 	if (pPickupEntity != NULL)
    {
       // let's head off toward that item...
-      v_node = pickup_origin - vecStart;
+      v_node = vecEnd - vecStart;
       bot_angles = UTIL_VecToAngles( v_node );
       pEdict->v.ideal_yaw = bot_angles.y;
       BotFixIdealYaw(pEdict);
@@ -319,12 +319,11 @@ bool BotFindWaypoint( bot_t *pBot )
 
    index = WaypointFindPath(&pPath, &path_index, pBot->curr_waypoint_index, team);
 
-   if (num_waypoints == 0)
-//   if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
+   if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
    {
 	   BotFindNode(pBot);
    }
-   
+
    while (index != -1)
    {
       // if index is not a current or recent previous waypoint...
@@ -674,8 +673,8 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
          }
       }
    }
-   else if (num_waypoints <= 0)
-//   else if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
+
+   else if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
    {
 	   BotFindNode(pBot);
    }
@@ -1080,7 +1079,8 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
 // GO FIND WEAPONS HERE!!!
 
 
-         if ((mod_id == VALVE_DLL) || (mod_id == DMC_DLL) || (mod_id == CONFORCE_DLL))
+         if ((mod_id == VALVE_DLL) || (mod_id == DMC_DLL) ||
+			 (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
          {
             if (RANDOM_LONG(1, 100) <= 50)
             {

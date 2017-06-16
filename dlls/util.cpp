@@ -605,6 +605,8 @@ void UTIL_BuildFileName(char *filename, char *arg1, char *arg2)
       strcpy(filename, "conforce/");
    else if (mod_id == BB_DLL)
       strcpy(filename, "brainbread/");
+   else if (mod_id == SVEN_DLL)
+      strcpy(filename, "svencoop/");
    else
    {
       ALERT( at_error, "HPB_bot - Error in UTIL_BuildFileName (mod ID is unknown)!" );

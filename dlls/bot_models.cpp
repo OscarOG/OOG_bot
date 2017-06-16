@@ -29,6 +29,7 @@ int number_skins;
 #define GEARBOX_MAX_SKINS   20
 #define HOLYWARS_MAX_SKINS   5
 #define CONFORCE_MAX_SKINS   3
+#define SVEN_MAX_SKINS		59
 
 extern int mod_id;
 
@@ -48,6 +49,20 @@ char *holywars_bot_models[HOLYWARS_MAX_SKINS] = {
 char *conforce_bot_models[CONFORCE_MAX_SKINS] = {
    "jaguar", "shark", "wolf"};
 
+char *sven_bot_models[SVEN_MAX_SKINS] = {
+	"aswat", "barney", "barniel", "beret", "betagordon", "boris",
+	"cannibal", "cl_suit", "colette", "dm_barney", "dm_gina",
+	"dm_gordon", "dm_helmet", "etac", "fassn", "gina", "gman",
+	"gordon", "grunt", "helmet", "hevbarney", "hevbarney2",
+	"hevscientist", "hevscientist2", "hevscientist3",
+	"hevscientist4", "hevscientist5", "junctionpunch",
+	"kate", "madscientist", "mandalorian", "massn", "obi09", "otis",
+	"punisher", "recon", "rgrunt", "robo", "scientist", "selene",
+	"shephard", "seini", "th_cl_suit", "th_dave", "th_einar",
+	"th_gangster", "th_jack", "th_neil", "th_nurse", "th_nypdcop",
+	"th_orderly", "th_patient", "th_paul", "th_worker", "tower",
+	"trinityrage", "unm_barney", "uscm", "zombie"};
+
 // default names for each of the above player models...
 char *valve_bot_names[VALVE_MAX_SKINS] = {
    "Barney", "Gina", "G-Man", "Gordon", "Helmet",
@@ -64,6 +79,19 @@ char *holywars_bot_names[HOLYWARS_MAX_SKINS] = {
 char *conforce_bot_names[CONFORCE_MAX_SKINS] = {
    "Jaguar", "Shark", "Wolf"};
 
+char *sven_bot_names[SVEN_MAX_SKINS] = {
+	"Aswat", "Barney", "Barniel", "Beret", "Gordon-Beta", "Boris",
+	"Cannibal", "CL-Suit", "Colette", "Barney-DM", "Gina-DM",
+	"Gordon-DM", "Helmet-DM", "Etac", "Female-Assassin", "Gina", "Gman",
+	"Gordon", "Grunt", "Helmet", "Barney-HEV", "Barney-HEV2",
+	"Scientist-HEV", "Scientist-HEV2", "Scientist-HEV3",
+	"Scientist-HEV4", "Scientist-HEV5", "Junction-Punch",
+	"Kate", "Mad-Scientist", "Mandalorian", "Male-Assassin", "Obi09", "Otis",
+	"Punisher", "Recon", "Robo-Grunt", "Robo", "Scientist", "Selene",
+	"Shephard", "Seini", "TH-CL-Suit", "Dave", "Einar",
+	"Gangster", "Jack", "Neil", "Nurse", "NYPD Cop",
+	"Orderly", "Patient", "Paul", "Worker", "Tower",
+	"Trinity-Rage", "Unmasked-Barney", "USCM", "Zombie"};
 
 #ifndef __linux__
 
@@ -221,6 +249,16 @@ void LoadBotModels(void)
       {
          strcpy(bot_skins[index].model_name, conforce_bot_models[index]);
          strcpy(bot_skins[index].bot_name, conforce_bot_names[index]);
+      }
+   }
+   else if (mod_id == SVEN_DLL)
+   {
+	   number_skins = SVEN_MAX_SKINS;
+
+      for (index=0; index < SVEN_MAX_SKINS; index++)
+      {
+         strcpy(bot_skins[index].model_name, sven_bot_models[index]);
+         strcpy(bot_skins[index].bot_name, sven_bot_names[index]);
       }
    }
 

@@ -21,6 +21,7 @@ void BotClient_Gearbox_WeaponList(void *p, int bot_index);
 void BotClient_FLF_WeaponList(void *p, int bot_index);
 void BotClient_DMC_WeaponList(void *p, int bot_index);
 void BotClient_CF_WeaponList(void *p, int bot_index);
+void BotClient_SC_WeaponList(void *p, int bot_index);
 
 void BotClient_Valve_CurrentWeapon(void *p, int bot_index);
 void BotClient_TFC_CurrentWeapon(void *p, int bot_index);
@@ -29,6 +30,7 @@ void BotClient_Gearbox_CurrentWeapon(void *p, int bot_index);
 void BotClient_FLF_CurrentWeapon(void *p, int bot_index);
 void BotClient_DMC_CurrentWeapon(void *p, int bot_index);
 void BotClient_CF_CurrentWeapon(void *p, int bot_index);
+void BotClient_SC_CurrentWeapon(void *p, int bot_index);
 
 void BotClient_Valve_AmmoX(void *p, int bot_index);
 void BotClient_TFC_AmmoX(void *p, int bot_index);
@@ -37,6 +39,7 @@ void BotClient_Gearbox_AmmoX(void *p, int bot_index);
 void BotClient_FLF_AmmoX(void *p, int bot_index);
 void BotClient_DMC_AmmoX(void *p, int bot_index);
 void BotClient_CF_AmmoX(void *p, int bot_index);
+void BotClient_SC_AmmoX(void *p, int bot_index);
 
 void BotClient_Valve_AmmoPickup(void *p, int bot_index);
 void BotClient_TFC_AmmoPickup(void *p, int bot_index);
@@ -45,6 +48,7 @@ void BotClient_Gearbox_AmmoPickup(void *p, int bot_index);
 void BotClient_FLF_AmmoPickup(void *p, int bot_index);
 void BotClient_DMC_AmmoPickup(void *p, int bot_index);
 void BotClient_CF_AmmoPickup(void *p, int bot_index);
+void BotClient_SC_AmmoPickup(void *p, int bot_index);
 
 void BotClient_TFC_SecAmmoVal(void *p, int bot_index);
 
@@ -55,6 +59,7 @@ void BotClient_Gearbox_WeaponPickup(void *p, int bot_index);
 void BotClient_FLF_WeaponPickup(void *p, int bot_index);
 void BotClient_DMC_WeaponPickup(void *p, int bot_index);
 void BotClient_CF_WeaponPickup(void *p, int bot_index);
+void BotClient_SC_WeaponPickup(void *p, int bot_index);
 
 void BotClient_Valve_ItemPickup(void *p, int bot_index);
 void BotClient_TFC_ItemPickup(void *p, int bot_index);
@@ -63,6 +68,7 @@ void BotClient_Gearbox_ItemPickup(void *p, int bot_index);
 void BotClient_FLF_ItemPickup(void *p, int bot_index);
 void BotClient_DMC_ItemPickup(void *p, int bot_index);
 void BotClient_CF_ItemPickup(void *p, int bot_index);
+void BotClient_SC_ItemPickup(void *p, int bot_index);
 
 void BotClient_Valve_Health(void *p, int bot_index);
 void BotClient_TFC_Health(void *p, int bot_index);
@@ -71,6 +77,7 @@ void BotClient_Gearbox_Health(void *p, int bot_index);
 void BotClient_FLF_Health(void *p, int bot_index);
 void BotClient_DMC_Health(void *p, int bot_index);
 void BotClient_CF_Health(void *p, int bot_index);
+void BotClient_SC_Health(void *p, int bot_index);
 
 void BotClient_Valve_Battery(void *p, int bot_index);
 void BotClient_TFC_Battery(void *p, int bot_index);
@@ -79,6 +86,7 @@ void BotClient_Gearbox_Battery(void *p, int bot_index);
 void BotClient_FLF_Battery(void *p, int bot_index);
 void BotClient_DMC_Battery(void *p, int bot_index);
 void BotClient_CF_Battery(void *p, int bot_index);
+void BotClient_SC_Battery(void *p, int bot_index);
 
 void BotClient_Valve_Damage(void *p, int bot_index);
 void BotClient_TFC_Damage(void *p, int bot_index);
@@ -87,6 +95,7 @@ void BotClient_Gearbox_Damage(void *p, int bot_index);
 void BotClient_FLF_Damage(void *p, int bot_index);
 void BotClient_DMC_Damage(void *p, int bot_index);
 void BotClient_CF_Damage(void *p, int bot_index);
+void BotClient_SC_Damage(void *p, int bot_index);
 
 void BotClient_CS_Money(void *p, int bot_index);
 void BotClient_CF_Money(void *p, int bot_index);
@@ -100,6 +109,7 @@ void BotClient_Gearbox_DeathMsg(void *p, int bot_index);
 void BotClient_FLF_DeathMsg(void *p, int bot_index);
 void BotClient_DMC_DeathMsg(void *p, int bot_index);
 void BotClient_CF_DeathMsg(void *p, int bot_index);
+void BotClient_SC_DeathMsg(void *p, int bot_index);
 
 void BotClient_TFC_TextMsg(void *p, int bot_index);
 
@@ -115,6 +125,7 @@ void BotClient_CS_ScreenFade(void *p, int bot_index);
 void BotClient_Gearbox_ScreenFade(void *p, int bot_index);
 void BotClient_FLF_ScreenFade(void *p, int bot_index);
 void BotClient_CF_ScreenFade(void *p, int bot_index);
+void BotClient_SC_ScreenFade(void *p, int bot_index);
 
 void BotClient_HolyWars_Halo(void *p, int bot_index);
 void BotClient_HolyWars_GameMode(void *p, int bot_index);

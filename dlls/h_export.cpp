@@ -194,6 +194,13 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
       strcpy(game_dll_filename, "brainbread\\dlls\\bb.dll");
 #endif
    }
+   else if (strcmpi(mod_name, "svencoop") == 0)
+   {
+      mod_id = SVEN_DLL;
+#ifndef __linux__
+      strcpy(game_dll_filename, "svencoop\\dlls\\hl.dll");
+#endif
+   }
 
    if (game_dll_filename[0])
    {

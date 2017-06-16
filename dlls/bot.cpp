@@ -383,7 +383,8 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
    if ((mod_id == VALVE_DLL) ||
        ((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect == NULL)) ||
-       (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL) || (mod_id == CONFORCE_DLL))
+       (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL) ||
+	   (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
    {
       int  max_skin_index;
 
@@ -628,8 +629,8 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
       // is this a MOD that supports model colors AND it's not teamplay?
       if (((mod_id == VALVE_DLL) || (mod_id == DMC_DLL) ||
-           (mod_id == GEARBOX_DLL) || (mod_id == HOLYWARS_DLL) &&
-		   (is_team_play == FALSE)))
+		  (mod_id == SVEN_DLL) || (mod_id == GEARBOX_DLL) ||
+		  (mod_id == HOLYWARS_DLL) && (is_team_play == FALSE)))
       {
          SET_CLIENT_KEY_VALUE( clientIndex, infobuffer, "model", c_skin );
 
@@ -1087,6 +1088,12 @@ void BotFindItem( bot_t *pBot )
                }
             }
          }
+/*		 else if ((strcmp("func_breakable", item_name) == 0))
+		 {
+			 pBot->pBotEnemy = pent;
+			 pBot->f_move_speed = 0;
+			 pBot->f_pause_time = 0;
+		 }	*/
          else
          {
             // trace a line from bot's eyes to func_ entity...
@@ -1209,10 +1216,16 @@ void BotFindItem( bot_t *pBot )
             }
          }
       }
-	  else if (strcmp("trigger_changelevel", item_name) == 0)
+	  else if ((strcmp("trigger_changelevel", item_name) == 0) ||
+			   (strcmp("trigger_teleport", item_name) == 0))
 	  {
-		  // can_pickup = TRUE;
-		  pPickupEntity = pent;
+		  if (BotEntityIsVisible( pBot, pent->v.origin ))
+		  {
+			  //float distance = (pent->v.origin - pEdict->v.origin).Length( );
+			  //if (distance <= 100)
+			  pPickupEntity = pent;
+			  pickup_origin = pent->v.origin;
+		  }
 	  }
       else  // everything else...
       {
@@ -1387,7 +1400,7 @@ void BotFindItem( bot_t *pBot )
          if (distance < min_distance)
          {
             min_distance = distance;        // update the minimum distance
-            pPickupEntity = pent;        // remember this entity
+            pPickupEntity = pent;			// remember this entity
             pickup_origin = entity_origin;  // remember location of entity
          }
       }
@@ -1478,6 +1491,19 @@ bool BotLookForGrenades( bot_t *pBot )
       entity_origin = pent->v.origin;
 
       if (mod_id == VALVE_DLL)
+      {
+         if (FInViewCone( &entity_origin, pEdict ) &&
+             FVisible( entity_origin, pEdict ))
+         {
+            if (strcmp("grenade", classname) == 0)
+               return TRUE;
+            if (strcmp("monster_satchel", classname) == 0)
+               return TRUE;
+            if (strcmp("monster_snark", classname) == 0)
+               return TRUE;
+         }
+      }
+	  else if (mod_id == SVEN_DLL)
       {
          if (FInViewCone( &entity_origin, pEdict ) &&
              FVisible( entity_origin, pEdict ))
@@ -1954,7 +1980,7 @@ void BotThink( bot_t *pBot )
                   pBot->pBotEnemy = BotFindEnemy( pBot );
             }
          }
-		 else if (mod_id == CONFORCE_DLL)
+		 else if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
 		 {
 			 BotLookForEnemy(pBot);
 		 }
@@ -2518,6 +2544,10 @@ void BotThink( bot_t *pBot )
                      // could be stuck trying to get to an item
                      pBot->f_find_item = gpGlobals->time + 0.5;
                   }
+				  else
+				  {
+					  FakeClientCommand(pBot->pEdict, "kill", NULL, NULL);
+				  }
                }
             }
 
@@ -2558,7 +2588,7 @@ void BotThink( bot_t *pBot )
                float waypoint_distance = (pEdict->v.origin - pBot->waypoint_origin).Length();
 
                if (waypoint_distance <= 20.0)  // if VERY close...
-                  pBot->f_move_speed = 25.0;  // go VERY slow
+                  pBot->f_move_speed = 20.0;  // go VERY slow
                else if (waypoint_distance <= 100.0)  // if fairly close...
                   pBot->f_move_speed = 50.0;  // go fairly slow
 

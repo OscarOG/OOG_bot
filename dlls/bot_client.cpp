@@ -288,6 +288,12 @@ void BotClient_CF_WeaponList(void *p, int bot_index)
    BotClient_Valve_WeaponList(p, bot_index);
 }
 
+void BotClient_SC_WeaponList(void *p, int bot_index)
+{
+   // this is just like the Valve Weapon List message
+   BotClient_Valve_WeaponList(p, bot_index);
+}
+
 // This message is sent when a weapon is selected (either by the bot chosing
 // a weapon or by the server auto assigning the bot a weapon).
 void BotClient_Valve_CurrentWeapon(void *p, int bot_index)
@@ -376,6 +382,12 @@ void BotClient_CF_CurrentWeapon(void *p, int bot_index)
    BotClient_Valve_CurrentWeapon(p, bot_index);
 }
 
+void BotClient_SC_CurrentWeapon(void *p, int bot_index)
+{
+   // this is just like the Valve Current Weapon message
+   BotClient_Valve_CurrentWeapon(p, bot_index);
+}
+
 // This message is sent whenever ammo ammounts are adjusted (up or down).
 void BotClient_Valve_AmmoX(void *p, int bot_index)
 {
@@ -438,6 +450,12 @@ void BotClient_DMC_AmmoX(void *p, int bot_index)
 }
 
 void BotClient_CF_AmmoX(void *p, int bot_index)
+{
+   // this is just like the Valve AmmoX message
+   BotClient_Valve_AmmoX(p, bot_index);
+}
+
+void BotClient_SC_AmmoX(void *p, int bot_index)
 {
    // this is just like the Valve AmmoX message
    BotClient_Valve_AmmoX(p, bot_index);
@@ -508,6 +526,12 @@ void BotClient_DMC_AmmoPickup(void *p, int bot_index)
 }
 
 void BotClient_CF_AmmoPickup(void *p, int bot_index)
+{
+   // this is just like the Valve Ammo Pickup message
+   BotClient_Valve_AmmoPickup(p, bot_index);
+}
+
+void BotClient_SC_AmmoPickup(void *p, int bot_index)
 {
    // this is just like the Valve Ammo Pickup message
    BotClient_Valve_AmmoPickup(p, bot_index);
@@ -586,6 +610,12 @@ void BotClient_CF_WeaponPickup(void *p, int bot_index)
    BotClient_Valve_WeaponPickup(p, bot_index);
 }
 
+void BotClient_SC_WeaponPickup(void *p, int bot_index)
+{
+   // this is just like the Valve Weapon Pickup message
+   BotClient_Valve_WeaponPickup(p, bot_index);
+}
+
 // This message gets sent when the bot picks up an item (like a battery
 // or a healthkit)
 void BotClient_Valve_ItemPickup(void *p, int bot_index)
@@ -623,6 +653,12 @@ void BotClient_DMC_ItemPickup(void *p, int bot_index)
 }
 
 void BotClient_CF_ItemPickup(void *p, int bot_index)
+{
+   // this is just like the Valve Item Pickup message
+   BotClient_Valve_ItemPickup(p, bot_index);
+}
+
+void BotClient_SC_ItemPickup(void *p, int bot_index)
 {
    // this is just like the Valve Item Pickup message
    BotClient_Valve_ItemPickup(p, bot_index);
@@ -670,6 +706,12 @@ void BotClient_CF_Health(void *p, int bot_index)
    BotClient_Valve_Health(p, bot_index);
 }
 
+void BotClient_SC_Health(void *p, int bot_index)
+{
+   // this is just like the Valve Health message
+   BotClient_Valve_Health(p, bot_index);
+}
+
 // This message gets sent when the bots armor changes.
 void BotClient_Valve_Battery(void *p, int bot_index)
 {
@@ -707,6 +749,12 @@ void BotClient_DMC_Battery(void *p, int bot_index)
 }
 
 void BotClient_CF_Battery(void *p, int bot_index)
+{
+   // this is just like the Valve Battery message
+   BotClient_Valve_Battery(p, bot_index);
+}
+
+void BotClient_SC_Battery(void *p, int bot_index)
 {
    // this is just like the Valve Battery message
    BotClient_Valve_Battery(p, bot_index);
@@ -815,6 +863,12 @@ void BotClient_CF_Damage(void *p, int bot_index)
    BotClient_Valve_Damage(p, bot_index);
 }
 
+void BotClient_SC_Damage(void *p, int bot_index)
+{
+   // this is just like the Valve Damage message
+   BotClient_Valve_Damage(p, bot_index);
+}
+
 // This message gets sent when the bots money ammount changes (for CS)
 void BotClient_CS_Money(void *p, int bot_index)
 {
@@ -835,11 +889,18 @@ void BotClient_CS_Money(void *p, int bot_index)
 // This message gets sent when the bots money ammount changes (for CF)
 void BotClient_CF_Money(void *p, int bot_index)
 {
-   static int state = 0;
-   static int bot_money;
+   static int state = 0;   // current state machine state
 
-   bots[bot_index].bot_money = *(int *)p;  // amount of money
-   // bot_money = *(int *)p;
+   if (state == 0)
+   {
+      state++;
+
+      bots[bot_index].bot_money = *(int *)p;  // amount of money
+   }
+   else
+   {
+      state = 0;  // ingore this field
+   }
 }
 
 
@@ -1002,6 +1063,12 @@ void BotClient_DMC_DeathMsg(void *p, int bot_index)
 }
 
 void BotClient_CF_DeathMsg(void *p, int bot_index)
+{
+   // this is just like the Valve DeathMsg message
+   BotClient_Valve_DeathMsg(p, bot_index);
+}
+
+void BotClient_SC_DeathMsg(void *p, int bot_index)
 {
    // this is just like the Valve DeathMsg message
    BotClient_Valve_DeathMsg(p, bot_index);
@@ -1193,6 +1260,12 @@ void BotClient_FLF_ScreenFade(void *p, int bot_index)
 }
 
 void BotClient_CF_ScreenFade(void *p, int bot_index)
+{
+   // this is just like the Valve ScreenFade message
+   BotClient_Valve_ScreenFade(p, bot_index);
+}
+
+void BotClient_SC_ScreenFade(void *p, int bot_index)
 {
    // this is just like the Valve ScreenFade message
    BotClient_Valve_ScreenFade(p, bot_index);

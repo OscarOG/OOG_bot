@@ -229,7 +229,7 @@ int DispatchSpawn( edict_t *pent )
          PRECACHE_SOUND("common/wpn_denyselect.wav");  // path add/delete error
          PRECACHE_SOUND("player/sprayer.wav");         // logo spray sound
 
-         m_spriteTexture = PRECACHE_MODEL( "sprites/lgtning.spr");
+		 m_spriteTexture = PRECACHE_MODEL( "sprites/disp_ring.spr");
 
          g_GameRules = TRUE;
 
@@ -1566,8 +1566,8 @@ void StartFrame( void )
             bot_reaction_time = bots[index].reaction_time;
 
             // respawn 1 bot then wait a while (otherwise engine crashes)
-            if ((mod_id == VALVE_DLL) ||
-                ((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect == NULL)) ||
+            if ((mod_id == VALVE_DLL) || (mod_id == SVEN_DLL) ||
+				((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect == NULL)) ||
                 (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL))
             {
                char c_skill[2];

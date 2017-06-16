@@ -624,6 +624,29 @@ void pfnMessageBegin(int msg_dest, int msg_type, const float *pOrigin, edict_t *
                   else if (msg_type == message_ScreenFade)
                      botMsgFunction = BotClient_CF_ScreenFade;
                }
+			   else if (mod_id == SVEN_DLL)
+               {
+                  if (msg_type == message_WeaponList)
+                     botMsgFunction = BotClient_SC_WeaponList;
+                  else if (msg_type == message_CurWeapon)
+                     botMsgFunction = BotClient_SC_CurrentWeapon;
+                  else if (msg_type == message_AmmoX)
+                     botMsgFunction = BotClient_SC_AmmoX;
+                  else if (msg_type == message_AmmoPickup)
+                     botMsgFunction = BotClient_SC_AmmoPickup;
+                  else if (msg_type == message_WeapPickup)
+                     botMsgFunction = BotClient_SC_WeaponPickup;
+                  else if (msg_type == message_ItemPickup)
+                     botMsgFunction = BotClient_SC_ItemPickup;
+                  else if (msg_type == message_Health)
+                     botMsgFunction = BotClient_SC_Health;
+                  else if (msg_type == message_Battery)
+                     botMsgFunction = BotClient_SC_Battery;
+                  else if (msg_type == message_Damage)
+                     botMsgFunction = BotClient_SC_Damage;
+                  else if (msg_type == message_ScreenFade)
+                     botMsgFunction = BotClient_SC_ScreenFade;
+               }
             }
          }
       }
@@ -675,6 +698,11 @@ void pfnMessageBegin(int msg_dest, int msg_type, const float *pOrigin, edict_t *
          {
             if (msg_type == message_DeathMsg)
                botMsgFunction = BotClient_CF_DeathMsg;
+         }
+		 else if (mod_id == SVEN_DLL)
+         {
+            if (msg_type == message_DeathMsg)
+               botMsgFunction = BotClient_SC_DeathMsg;
          }
       }
    }
@@ -1149,6 +1177,33 @@ int pfnRegUserMsg(const char *pszName, int iSize)
             message_SayText = msg;
          else if (strcmp(pszName, "BarterArea") == 0)
             message_BarterArea = msg;
+      }
+	  else if (mod_id == SVEN_DLL)
+      {
+         if (strcmp(pszName, "WeaponList") == 0)
+            message_WeaponList = msg;
+         else if (strcmp(pszName, "CurWeapon") == 0)
+            message_CurWeapon = msg;
+         else if (strcmp(pszName, "AmmoX") == 0)
+            message_AmmoX = msg;
+         else if (strcmp(pszName, "AmmoPickup") == 0)
+            message_AmmoPickup = msg;
+         else if (strcmp(pszName, "WeapPickup") == 0)
+            message_WeapPickup = msg;
+         else if (strcmp(pszName, "ItemPickup") == 0)
+            message_ItemPickup = msg;
+         else if (strcmp(pszName, "Health") == 0)
+            message_Health = msg;
+         else if (strcmp(pszName, "Battery") == 0)
+            message_Battery = msg;
+         else if (strcmp(pszName, "Damage") == 0)
+            message_Damage = msg;
+         else if (strcmp(pszName, "DeathMsg") == 0)
+            message_DeathMsg = msg;
+         else if (strcmp(pszName, "SayText") == 0)
+            message_SayText = msg;
+         else if (strcmp(pszName, "ScreenFade") == 0)
+            message_ScreenFade = msg;
       }
    }
 

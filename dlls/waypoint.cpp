@@ -825,8 +825,7 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
              (strcmp("item_shells", item_name) == 0) ||
              (strcmp("item_spikes", item_name) == 0) ||
              (strcmp("item_rockets", item_name) == 0) ||
-             ((strncmp("weapon_", item_name, 7) == 0) &&
-              (pent->v.owner == NULL)))
+             ((strncmp("weapon_", item_name, 7) == 0) && (pent->v.owner == NULL)))
          {
             distance = (pent->v.origin - origin).Length();
 
@@ -841,6 +840,26 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
                min_distance = distance;
             }
          }
+
+		 if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+		 {
+			 if ((strcmp(item_name, "trigger_changelevel") == 0) ||
+				 (strcmp(item_name, "trigger_teleport") == 0))
+			 {
+				 distance = (pent->v.origin - origin).Length();
+
+				 if (distance < min_distance)
+				 {
+					 strcpy(nearest_name, item_name);
+					 
+					 tfc_backpack_index = -1;  // "null" out backpack index
+					 
+					 nearest_pent = pent;
+					 
+					 min_distance = distance;
+				 }
+			 }
+		 }
 
          if (mod_id == TFC_DLL)
          {
@@ -895,6 +914,14 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
 
       if ((strncmp("weapon_", nearest_name, 7) == 0) &&
           (nearest_pent->v.owner == NULL))
+      {
+         if (pEntity)
+            ClientPrint(pEntity, HUD_PRINTCONSOLE, "found a weapon!\n");
+         waypoints[wpt_index].flags |= W_FL_WEAPON;
+      }
+
+	  if ((strncmp("trigger_changelevel", nearest_name, 19) == 0) ||
+		  (strncmp("trigger_teleport", nearest_name, 16) == 0))
       {
          if (pEntity)
             ClientPrint(pEntity, HUD_PRINTCONSOLE, "found a weapon!\n");
@@ -978,10 +1005,9 @@ void WaypointAdd(edict_t *pEntity)
 
    // search the area near the waypoint for items (HEALTH, AMMO, WEAPON, etc.)
    WaypointSearchItems(pEntity, waypoints[index].origin, index);
-
-
-   // draw a blue waypoint
-   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 5);
+   
+   // draw a waypoint beam
+   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
 
    EMIT_SOUND_DYN2(pEntity, CHAN_WEAPON, "weapons/xbow_hit1.wav", 1.0,
                    ATTN_NORM, 0, 100);
@@ -1056,8 +1082,8 @@ void WaypointAddAiming(edict_t *pEntity)
    start = pEntity->v.origin - Vector(0, 0, 10);
    end = start + Vector(0, 0, 14);
 
-   // draw a blue waypoint
-   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 5);
+   // draw a waypoint beam
+   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
 
    EMIT_SOUND_DYN2(pEntity, CHAN_WEAPON, "weapons/xbow_hit1.wav", 1.0,
                    ATTN_NORM, 0, 100);
@@ -1823,8 +1849,8 @@ void WaypointThink(edict_t *pEntity)
                   end = start + Vector(0, 0, 68);
                }
 
-               // draw a blue waypoint
-               WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 5);
+               // draw a waypoint beam
+			   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
 
                wp_display_time[i] = gpGlobals->time;
             }
@@ -1835,7 +1861,7 @@ void WaypointThink(edict_t *pEntity)
       if (g_path_waypoint)
       {
          // check if player is close enough to a waypoint and time to draw path...
-         if ((min_distance <= 50) && (f_path_time <= gpGlobals->time))
+         if ((min_distance <= 80) && (f_path_time <= gpGlobals->time)) // 50
          {
             PATH *p;
 
@@ -1854,8 +1880,7 @@ void WaypointThink(edict_t *pEntity)
                      Vector v_src = waypoints[index].origin;
                      Vector v_dest = waypoints[p->index[i]].origin;
 
-                     // draw a white line to this index's waypoint
-                     WaypointDrawBeam(pEntity, v_src, v_dest, 10, 2, 250, 250, 250, 200, 10);
+					 WaypointDrawBeam(pEntity, v_src, v_dest, 10, 2, 100, 230, 250, 190, 9);
                   }
 
                   i++;

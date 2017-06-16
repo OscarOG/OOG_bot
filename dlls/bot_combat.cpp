@@ -320,6 +320,7 @@ bot_weapon_select_t dmc_weapon_select[] = {
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
 };
 
+//	contra-force
 bot_weapon_select_t cf_weapon_select[] = {
 	{CF_WEAPON_SKS45, "weapon_sks45", 5, 30.0, 1000.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
@@ -357,6 +358,36 @@ bot_weapon_select_t cf_weapon_select[] = {
     10, FALSE, 50, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
     {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+};
+
+//	sven co-op
+bot_weapon_select_t sc_weapon_select[] = {
+   {SC_WEP_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
+    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
+    30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
+    50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
+    100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
+    100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
+   {SC_WEP_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
+    100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_357, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
+    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
+    100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_9MMAR, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
+    100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
+    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
+    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {SC_WEP_9MMHANDGUN, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
+    100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   /* terminator */
+   {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
 };
 
 // weapon firing delay based on skill (min and max delay for each weapon)
@@ -707,6 +738,7 @@ bot_fire_delay_t dmc_fire_delay[] = {
        0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}}
 };
 
+//	contra-force
 bot_fire_delay_t cf_fire_delay[] = {
 	{CF_WEAPON_SKS45,
     0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
@@ -764,6 +796,49 @@ bot_fire_delay_t cf_fire_delay[] = {
        0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}}
 };
 
+//	sven co-op
+bot_fire_delay_t sc_fire_delay[] = {
+   {SC_WEP_CROWBAR,
+    0.3, {0.0, 0.2, 0.3, 0.4, 0.6}, {0.1, 0.3, 0.5, 0.7, 1.0},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_HANDGRENADE,
+    0.1, {1.0, 2.0, 3.0, 4.0, 5.0}, {3.0, 4.0, 5.0, 6.0, 7.0},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_SNARK,
+    0.1, {0.0, 0.1, 0.2, 0.4, 0.6}, {0.1, 0.2, 0.5, 0.7, 1.0},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_EGON,
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_GAUSS,
+    0.2, {0.0, 0.2, 0.3, 0.5, 1.0}, {0.1, 0.3, 0.5, 0.8, 1.2},
+    1.0, {0.2, 0.3, 0.5, 0.8, 1.2}, {0.5, 0.7, 1.0, 1.5, 2.0}},
+   {SC_WEP_SHOTGUN,
+    0.75, {0.0, 0.2, 0.4, 0.6, 0.8}, {0.25, 0.5, 0.8, 1.2, 2.0},
+    1.5, {0.0, 0.2, 0.4, 0.6, 0.8}, {0.25, 0.5, 0.8, 1.2, 2.0}},
+   {SC_WEP_357,
+    0.75, {0.0, 0.2, 0.4, 1.0, 1.5}, {0.25, 0.5, 0.8, 1.3, 2.2},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_HORNETGUN,
+    0.25, {0.0, 0.25, 0.4, 0.6, 1.0}, {0.1, 0.4, 0.7, 1.0, 1.5},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_9MMAR,
+    0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
+    1.0, {0.0, 0.4, 0.7, 1.0, 1.4}, {0.3, 0.7, 1.0, 1.6, 2.0}},
+   {SC_WEP_CROSSBOW,
+    0.75, {0.0, 0.2, 0.5, 0.8, 1.0}, {0.25, 0.4, 0.7, 1.0, 1.3},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_RPG,
+    1.5, {1.0, 2.0, 3.0, 4.0, 5.0}, {3.0, 4.0, 5.0, 6.0, 7.0},
+    0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
+   {SC_WEP_9MMHANDGUN,
+    0.3, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
+    0.2, {0.0, 0.0, 0.1, 0.1, 0.2}, {0.1, 0.1, 0.2, 0.2, 0.4}},
+   /* terminator */
+   {0, 0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0},
+       0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}}
+};
+
 void BotCheckTeamplay(void)
 {
    float f_team_play = 0.0;
@@ -793,61 +868,55 @@ void BotLookForEnemy(bot_t *pBot)
 	pBot->pBotEnemy = NULL;
 
 	float radius;
-//	float distance;
-	float min_distance;
 	bool is_enemy = NULL;
-//	int angle_to_entity;
-
-//	char item_name[40];
+	char classname[40];
 
 	TraceResult tr;
 
-	Vector entity_origin;
-	Vector vecStart;
-	Vector vecEnd;
-	Vector v_enemy;
-	Vector bot_angles;
+	Vector vecStart, vecEnd;
 	
 	if ((num_waypoints > 0) && (pBot->curr_waypoint_index != -1))
 		radius = 800.0;
 	else
 		radius = 1200.0;
 
-	min_distance = radius + 1.0;
-
 	if (mod_id == CONFORCE_DLL)
 	{
-		while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-		{
+		pBot->f_pause_time = 0;
 
-			if ((strcmp(STRING(pent->v.classname), "monster_alien_controller") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_alien_grunt") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_alien_slave") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_apache") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_babycrab") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_barnacle") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_barry") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_bigmomma") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_bullchicken") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_gargantua") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_grunt_repel") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_headcrab") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_houndeye") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_assassin") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_assassin2") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_communism") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_human_grunt") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_ichthyosaur") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_kingpin") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_miniturret") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_nihilanth") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_nihilith") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_osprey") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_panthereye") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_sentry") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_turret") == 0) ||
-				(strcmp(STRING(pent->v.classname), "monster_zombie") == 0) ||
-				(strcmp(STRING(pent->v.classname), "func_breakable") == 0))
+		vecStart = pEdict->v.origin;
+
+		while ((pent = UTIL_FindEntityInSphere( pent, vecStart, radius )) != NULL)
+		{
+			strcpy(classname, STRING(pent->v.classname));
+
+			if ((strcmp(classname, "monster_alien_controller") == 0) ||
+				(strcmp(classname, "monster_alien_grunt") == 0) ||
+				(strcmp(classname, "monster_alien_slave") == 0) ||
+				(strcmp(classname, "monster_apache") == 0) ||
+				(strcmp(classname, "monster_babycrab") == 0) ||
+				(strcmp(classname, "monster_barnacle") == 0) ||
+				(strcmp(classname, "monster_barry") == 0) ||
+				(strcmp(classname, "monster_bigmomma") == 0) ||
+				(strcmp(classname, "monster_bullchicken") == 0) ||
+				(strcmp(classname, "monster_gargantua") == 0) ||
+				(strcmp(classname, "monster_grunt_repel") == 0) ||
+				(strcmp(classname, "monster_headcrab") == 0) ||
+				(strcmp(classname, "monster_houndeye") == 0) ||
+				(strcmp(classname, "monster_human_assassin") == 0) ||
+				(strcmp(classname, "monster_human_assassin2") == 0) ||
+				(strcmp(classname, "monster_human_communism") == 0) ||
+				(strcmp(classname, "monster_human_grunt") == 0) ||
+				(strcmp(classname, "monster_ichthyosaur") == 0) ||
+				(strcmp(classname, "monster_kingpin") == 0) ||
+				(strcmp(classname, "monster_miniturret") == 0) ||
+				(strcmp(classname, "monster_nihilanth") == 0) ||
+				(strcmp(classname, "monster_nihilith") == 0) ||
+				(strcmp(classname, "monster_osprey") == 0) ||
+				(strcmp(classname, "monster_panthereye") == 0) ||
+				(strcmp(classname, "monster_sentry") == 0) ||
+				(strcmp(classname, "monster_turret") == 0) ||
+				(strcmp(classname, "monster_zombie") == 0))
 			{
 				is_enemy = TRUE;
 			}
@@ -855,6 +924,7 @@ void BotLookForEnemy(bot_t *pBot)
 			{
 				continue;
 			}
+
 			if (is_enemy)
 			{
 				vecEnd = pent->v.origin;
@@ -863,7 +933,84 @@ void BotLookForEnemy(bot_t *pBot)
 				{
 					pBot->pBotEnemy = pent;
 					pNewEnemy = pent;
-					pBot->f_pause_time = 0;
+				}
+			}
+		}
+	}
+
+	if ((mod_id == SVEN_DLL))
+	{
+
+		pBot->f_pause_time = 0;
+
+		vecStart = pEdict->v.origin;
+
+		while ((pent = UTIL_FindEntityInSphere( pent, vecStart, radius )) != NULL)
+		{
+			strcpy(classname, STRING(pent->v.classname));
+
+			if ((strcmp(classname, "monster_alien_controller") == 0) ||
+				(strcmp(classname, "monster_alien_grunt") == 0) ||
+				(strcmp(classname, "monster_alien_slave") == 0) ||
+				(strcmp(classname, "monster_apache") == 0) ||
+				(strcmp(classname, "monster_babycrab") == 0) ||
+				(strcmp(classname, "monster_barnacle") == 0) ||
+				(strcmp(classname, "monster_barry") == 0) ||
+				(strcmp(classname, "monster_bigmomma") == 0) ||
+				(strcmp(classname, "monster_bullchicken") == 0) ||
+				(strcmp(classname, "monster_gargantua") == 0) ||
+				(strcmp(classname, "monster_grunt_repel") == 0) ||
+				(strcmp(classname, "monster_headcrab") == 0) ||
+				(strcmp(classname, "monster_houndeye") == 0) ||
+				(strcmp(classname, "monster_human_assassin") == 0) ||
+				(strcmp(classname, "monster_human_grunt") == 0) ||
+				(strcmp(classname, "monster_ichthyosaur") == 0) ||
+				(strcmp(classname, "monster_kingpin") == 0) ||
+				(strcmp(classname, "monster_miniturret") == 0) ||
+				(strcmp(classname, "monster_nihilanth") == 0) ||
+				(strcmp(classname, "monster_nihilith") == 0) ||
+				(strcmp(classname, "monster_osprey") == 0) ||
+				(strcmp(classname, "monster_panthereye") == 0) ||
+				(strcmp(classname, "monster_sentry") == 0) ||
+				(strcmp(classname, "monster_turret") == 0) ||
+				(strcmp(classname, "monster_zombie") == 0) ||
+				(strcmp(classname, "monster_alien_babyvoltigore") == 0) ||
+				(strcmp(classname, "monster_alien_tor") == 0) ||
+				(strcmp(classname, "monster_alien_voltigore") == 0) ||
+				(strcmp(classname, "monster_assassin_repel") == 0) ||
+				(strcmp(classname, "monster_babygarg") == 0) ||
+				(strcmp(classname, "monster_blkop_osprey") == 0) ||
+				(strcmp(classname, "monster_bodyguard") == 0) ||
+				(strcmp(classname, "monster_gonome") == 0) ||
+				(strcmp(classname, "monster_hwgrunt") == 0) ||
+				(strcmp(classname, "monster_hwgrunt_repel") == 0) ||
+				(strcmp(classname, "monster_male_assassin") == 0) ||
+				(strcmp(classname, "monster_pitdrone") == 0) ||
+				(strcmp(classname, "monster_robogrunt") == 0) ||
+				(strcmp(classname, "monster_robogrunt_repel") == 0) ||
+				(strcmp(classname, "monster_shockroach") == 0) ||
+				(strcmp(classname, "monster_shocktrooper") == 0) ||
+				(strcmp(classname, "monster_snark") == 0) ||
+				(strcmp(classname, "monster_sqknest") == 0) ||
+				(strcmp(classname, "monster_stukabat") == 0) ||
+				(strcmp(classname, "monster_zombie_barney") == 0) ||
+				(strcmp(classname, "monster_zombie_soldier") == 0))
+			{
+				is_enemy = TRUE;
+			}
+			else 
+			{
+				continue;
+			}
+
+			if (is_enemy)
+			{
+				vecEnd = pent->v.origin;
+
+				if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
+				{
+					pBot->pBotEnemy = pent;
+					pNewEnemy = pent;
 				}
 			}
 		}
@@ -1159,7 +1306,7 @@ edict_t *BotFindEnemy( bot_t *pBot )
 
       nearestdistance = 9999;
 
-	  if (mod_id == CONFORCE_DLL)
+	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
 	  {
 		  BotLookForEnemy(pBot);
 	  }
@@ -1293,7 +1440,8 @@ edict_t *BotFindEnemy( bot_t *pBot )
    {
       pBot->f_bot_see_enemy_time = -1;  // so we won't keep reloading
 
-      if ((mod_id == VALVE_DLL) || (mod_id == GEARBOX_DLL) || (mod_id == CONFORCE_DLL))
+      if ((mod_id == VALVE_DLL) || (mod_id == GEARBOX_DLL) ||
+		  (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
       {
          pEdict->v.button |= IN_RELOAD;  // press reload button
       }
@@ -1366,6 +1514,11 @@ bool BotFireWeapon( Vector v_enemy, bot_t *pBot, int weapon_choice)
    {
       pSelect = &cf_weapon_select[0];
       pDelay = &cf_fire_delay[0];
+   }
+   else if ((mod_id == SVEN_DLL))
+   {
+      pSelect = &sc_weapon_select[0];
+      pDelay = &sc_fire_delay[0];
    }
 
    if (pSelect)
@@ -1649,7 +1802,8 @@ bool BotFireWeapon( Vector v_enemy, bot_t *pBot, int weapon_choice)
              ((mod_id == GEARBOX_DLL) && (iId == GEARBOX_WEAPON_CROWBAR)) ||
              ((mod_id == HOLYWARS_DLL) && (iId == HW_WEAPON_JACKHAMMER)) ||
              ((mod_id == DMC_DLL) && (iId == DMC_WEAPON_AXE)) ||
-			 ((mod_id == CONFORCE_DLL) && (iId == CF_WEAPON_KNIFE)))
+			 ((mod_id == CONFORCE_DLL) && (iId == CF_WEAPON_KNIFE)) ||
+			 ((mod_id == SVEN_DLL) && (iId == SC_WEP_CROWBAR)))
          {
             // check if bot needs to duck down to hit enemy...
             if (pBot->pBotEnemy->v.origin.z < (pEdict->v.origin.z - 30))
@@ -1752,7 +1906,8 @@ void BotShootAtEnemy( bot_t *pBot )
        ((mod_id == GEARBOX_DLL) && (pBot->current_weapon.iId == GEARBOX_WEAPON_RPG)) ||
        ((mod_id == HOLYWARS_DLL) && (pBot->current_weapon.iId == HW_WEAPON_ROCKETLAUNCHER )) ||
        ((mod_id == DMC_DLL) && (pBot->current_weapon.iId == DMC_WEAPON_ROCKET1)) ||
-	   ((mod_id == CONFORCE_DLL) && (pBot->current_weapon.iId == CF_WEAPON_M72A1)))
+	   ((mod_id == CONFORCE_DLL) && (pBot->current_weapon.iId == CF_WEAPON_M72A1)) ||
+	   ((mod_id == SVEN_DLL) && (pBot->current_weapon.iId == SC_WEP_RPG)))
    {
       Vector v_src, v_dest;
       TraceResult tr;
