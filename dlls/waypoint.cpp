@@ -1006,8 +1006,23 @@ void WaypointAdd(edict_t *pEntity)
    // search the area near the waypoint for items (HEALTH, AMMO, WEAPON, etc.)
    WaypointSearchItems(pEntity, waypoints[index].origin, index);
    
-   // draw a waypoint beam
-   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
+   if(waypoints[index].flags & W_FL_LADDER)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 255, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_CROUCH)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 255, 255, 250, 8);
+   else if (waypoints[index].flags & W_FL_DOOR)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 127, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_CLOSE_TO)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 0, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_HUMAN_TOWER)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 0, 255, 250, 8);
+   else if (waypoints[index].flags & W_FL_GOAL)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 255, 0, 250, 8);
+   else
+   {
+	   // draw a blue waypoint
+		WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 8);
+   }
 
    EMIT_SOUND_DYN2(pEntity, CHAN_WEAPON, "weapons/xbow_hit1.wav", 1.0,
                    ATTN_NORM, 0, 100);
@@ -1082,8 +1097,23 @@ void WaypointAddAiming(edict_t *pEntity)
    start = pEntity->v.origin - Vector(0, 0, 10);
    end = start + Vector(0, 0, 14);
 
-   // draw a waypoint beam
-   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
+   if(waypoints[index].flags & W_FL_LADDER)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 255, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_CROUCH)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 255, 255, 250, 8);
+   else if (waypoints[index].flags & W_FL_DOOR)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 127, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_CLOSE_TO)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 0, 0, 250, 8);
+   else if (waypoints[index].flags & W_FL_HUMAN_TOWER)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 0, 255, 250, 8);
+   else if (waypoints[index].flags & W_FL_GOAL)
+	   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 255, 0, 250, 8);
+   else
+   {
+	   // draw a blue waypoint
+		WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 8);
+   }
 
    EMIT_SOUND_DYN2(pEntity, CHAN_WEAPON, "weapons/xbow_hit1.wav", 1.0,
                    ATTN_NORM, 0, 100);
@@ -1770,6 +1800,15 @@ void WaypointPrintInfo(edict_t *pEntity)
 
    if (flags & W_FL_DISPENSER)
       ClientPrint(pEntity, HUD_PRINTNOTIFY, "Engineers will build a dispenser here\n");
+
+   if (flags & W_FL_CLOSE_TO)
+      ClientPrint(pEntity, HUD_PRINTNOTIFY, "Bots will stay close to this waypoint\n");
+
+   if (flags & W_FL_HUMAN_TOWER)
+      ClientPrint(pEntity, HUD_PRINTNOTIFY, "Bots will try to make human tower here\n");
+
+   if (flags & W_FL_GOAL)
+      ClientPrint(pEntity, HUD_PRINTNOTIFY, "Bots will try to reach here\n");
 }
 
 
@@ -1849,8 +1888,17 @@ void WaypointThink(edict_t *pEntity)
                   end = start + Vector(0, 0, 68);
                }
 
-               // draw a waypoint beam
-			   WaypointDrawBeam(pEntity, start, end, 30, 0, 250, 250, 250, 240, 7);
+               if(waypoints[index].flags & W_FL_LADDER)
+				   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 255, 0, 250, 8);
+			   else if (waypoints[index].flags & W_FL_CROUCH)
+				   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 255, 255, 250, 8);
+			   else if (waypoints[index].flags & W_FL_DOOR)
+				   WaypointDrawBeam(pEntity, start, end, 30, 0, 255, 127, 0, 250, 8);
+			   else
+			   {
+				   // draw a blue waypoint
+				   WaypointDrawBeam(pEntity, start, end, 30, 0, 0, 0, 255, 250, 8);
+			   }
 
                wp_display_time[i] = gpGlobals->time;
             }
@@ -1880,7 +1928,7 @@ void WaypointThink(edict_t *pEntity)
                      Vector v_src = waypoints[index].origin;
                      Vector v_dest = waypoints[p->index[i]].origin;
 
-					 WaypointDrawBeam(pEntity, v_src, v_dest, 10, 2, 100, 230, 250, 190, 9);
+					 WaypointDrawBeam(pEntity, v_src, v_dest, 10, 2, 250, 250, 250, 200, 9);
                   }
 
                   i++;

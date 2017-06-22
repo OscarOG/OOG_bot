@@ -178,20 +178,6 @@
 #define CF_WEAPON_M67GRENADE     20
 
 // weapon ID values for Sven Co-op 4.8
-#define SC_WEP_CROWBAR			  1
-#define SC_WEP_9MMHANDGUN		  2
-#define SC_WEP_357				  3
-#define SC_WEP_9MMAR			  4
-#define SC_WEP_CROSSBOW			  6
-#define SC_WEP_SHOTGUN			  7
-#define SC_WEP_RPG				  8
-#define SC_WEP_GAUSS			  9
-#define SC_WEP_EGON				 10
-#define SC_WEP_HORNETGUN		 11
-#define SC_WEP_HANDGRENADE		 12
-#define SC_WEP_TRIPMINE			 13
-#define SC_WEP_SATCHEL			 14
-#define SC_WEP_SNARK			 15
 #define SC_WEP_UZIAKIMBO		 16
 #define SC_WEP_UZI				 17
 #define SC_WEP_MEDKIT			 18

@@ -27,6 +27,7 @@
 #define MENU_2     2
 #define MENU_3     3
 #define MENU_4     4
+#define MENU_5     5
 
 
 extern GETENTITYAPI other_GetEntityAPI;
@@ -128,7 +129,9 @@ char *show_menu_3_flf =
 char *show_menu_3_hw =
    {"Waypoint Tags\n\n1. Halo Location\n\n\n\n5. More"};
 char *show_menu_4 =
-   {"Waypoint Tags\n\n1. Health\n2. Armor\n3. Ammo\n4. Jump\n5. CANCEL"};
+   {"Waypoint Tags\n\n1. Health\n2. Armor\n3. Ammo\n4. Jump\n5. More"};
+char *show_menu_5 =
+   {"Waypoint Tags\n\n1. Close to\n2. Human Tower\n3. Goal\n4. CANCEL"};
 
 
 void BotNameInit(void);
@@ -229,7 +232,7 @@ int DispatchSpawn( edict_t *pent )
          PRECACHE_SOUND("common/wpn_denyselect.wav");  // path add/delete error
          PRECACHE_SOUND("player/sprayer.wav");         // logo spray sound
 
-		 m_spriteTexture = PRECACHE_MODEL( "sprites/disp_ring.spr");
+		 m_spriteTexture = PRECACHE_MODEL( "sprites/waypoints.spr");
 
          g_GameRules = TRUE;
 
@@ -1260,6 +1263,38 @@ void ClientCommand( edict_t *pEntity )
                   WaypointAddAiming(pEntity);
                }
             }
+			else if (FStrEq(arg1, "5"))
+               {
+                  g_menu_state = MENU_5;
+
+                  UTIL_ShowMenu(pEntity, 0x1F, -1, FALSE, show_menu_5);
+
+                  return;
+               }
+		 }
+		 else if (g_menu_state == MENU_5)  // fifth menu...
+         {
+            if (FStrEq(arg1, "1"))  // close to
+            {
+               if (waypoints[g_menu_waypoint].flags & W_FL_CLOSE_TO)
+                  waypoints[g_menu_waypoint].flags &= ~W_FL_CLOSE_TO;  // off
+               else
+                  waypoints[g_menu_waypoint].flags |= W_FL_CLOSE_TO;  // on
+            }
+            else if (FStrEq(arg1, "2"))  // human tower
+            {
+               if (waypoints[g_menu_waypoint].flags & W_FL_HUMAN_TOWER)
+                  waypoints[g_menu_waypoint].flags &= ~W_FL_HUMAN_TOWER;  // off
+               else
+                  waypoints[g_menu_waypoint].flags |= W_FL_HUMAN_TOWER;  // on
+            }
+            else if (FStrEq(arg1, "3"))  // goal
+            {
+               if (waypoints[g_menu_waypoint].flags & W_FL_GOAL)
+                  waypoints[g_menu_waypoint].flags &= ~W_FL_GOAL;  // off
+               else
+                  waypoints[g_menu_waypoint].flags |= W_FL_GOAL;  // on
+            }
          }
 
          g_menu_state = MENU_NONE;
@@ -1620,9 +1655,9 @@ void StartFrame( void )
             bot_chat_lower_percent = lower;    // restore global chat percent
             bot_reaction_time = react;
 
-            respawn_time = gpGlobals->time + 2.0;  // set next respawn time
+            respawn_time = gpGlobals->time + 4.0;  // set next respawn time
 
-            bot_check_time = gpGlobals->time + 5.0;
+            bot_check_time = gpGlobals->time + 7.0;
          }
          else
          {

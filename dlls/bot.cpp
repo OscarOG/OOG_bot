@@ -2571,7 +2571,7 @@ void BotThink( bot_t *pBot )
       // check if the next waypoint is a door waypoint...
       if (waypoints[pBot->curr_waypoint_index].flags & W_FL_DOOR)
       {
-         pBot->f_move_speed = pBot->f_max_speed / 3;  // slow down for doors
+         pBot->f_move_speed = pBot->f_max_speed / 4;  // slow down for doors
       }
 
       // check if the next waypoint is a ladder waypoint...
@@ -2793,7 +2793,7 @@ void BotThink( bot_t *pBot )
    else if (pBot->f_grenade_found_time + 1.0 > gpGlobals->time)
    {
       // move backwards for 1.0 second after seeing a grenade...
-      pBot->f_move_speed = -1.0 * pBot->f_move_speed;
+      pBot->f_move_speed = -1.7 * pBot->f_move_speed;
    }
 
    pEdict->v.v_angle.z = 0;  // reset roll to 0 (straight up and down)

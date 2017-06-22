@@ -673,12 +673,12 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
          }
       }
    }
-
+/*
    else if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
    {
 	   BotFindNode(pBot);
    }
-
+*/
    // check if we need to find a waypoint...
    if (pBot->curr_waypoint_index == -1)
    {
@@ -768,14 +768,23 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
    waypoint_distance = (pEdict->v.origin - pBot->waypoint_origin).Length();
 
    // set the minimum distance from waypoint to be considered "touching" it
-   min_distance = 50.0;
-
+   if ((waypoints[pBot->curr_waypoint_index].flags & W_FL_CROUCH) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_SENTRYGUN) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_DISPENSER) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_CLOSE_TO) ||
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_HUMAN_TOWER))
+	   min_distance = 20.0;
+   else
+	   min_distance = 40.0;
+/*
    // if this is a crouch waypoint, bot must be fairly close...
    if (waypoints[pBot->curr_waypoint_index].flags & W_FL_CROUCH)
       min_distance = 20.0;
 
    if (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP)
-      min_distance = 25.0;
+      min_distance = 20.0;
 
    if (waypoints[pBot->curr_waypoint_index].flags & W_FL_SENTRYGUN)
       min_distance = 20.0;
@@ -786,7 +795,7 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
    // if this is a ladder waypoint, bot must be fairly close to get on ladder
    if (waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER)
       min_distance = 20.0;
-
+*/
    // if this is a defenders waypoint, bot must be fairly close...
    if ((mod_id == FRONTLINE_DLL) &&
        (waypoints[pBot->curr_waypoint_index].flags & W_FL_FLF_DEFEND))
@@ -819,13 +828,44 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
       // check if the waypoint is a door waypoint
       if (waypoints[pBot->curr_waypoint_index].flags & W_FL_DOOR)
       {
-         pBot->f_dont_avoid_wall_time = gpGlobals->time + 5.0;
+         pBot->f_dont_avoid_wall_time = gpGlobals->time + 7.0;
       }
 
       // check if the next waypoint is a jump waypoint...
       if (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP)
       {
          pEdict->v.button |= IN_JUMP;  // jump here
+      }
+
+	  if (waypoints[pBot->curr_waypoint_index].flags & W_FL_HUMAN_TOWER)
+      {
+		 edict_t *pPlayer = NULL;
+
+		 while ( (pPlayer = UTIL_FindEntityInSphere(pPlayer, waypoints[pBot->curr_waypoint_index].origin, 24.0)) != NULL )
+		{
+			if ( pPlayer->v.flags & FL_CLIENT )
+			{
+				if ( !*STRING(pPlayer->v.netname) )
+					continue;
+				if ( ( pPlayer->v.flags & FL_DUCKING ) || ( pPlayer->v.button & IN_DUCK ) )
+				{
+					break;
+				}
+			}
+		}
+/*
+		if ( pBot->pev->origin.z < (curr_waypoint_index->v.origin.z - 16.0) ) // not high enough yet
+			bTouchedWpt = FALSE;
+		// player in way so cant get much closer, start human tower here.
+		else if ( pPlayer )
+		{
+			bTouchedWpt = (fDistance <= 100);
+		}
+		else // get closer before crouching
+			bTouchedWpt = (fDistance <= 24);
+*/
+//         pEdict->v.button |= IN_DUCK;  // crouch here and wait
+//		 pBot->f_pause_time = 30.0;
       }
 
       // check if the waypoint is a sniper waypoint...
@@ -996,6 +1036,18 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
                return TRUE;
             }
          }
+      }
+
+	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+      {
+         // find the nearest flag goal waypoint...
+
+         index = WaypointFindNearestGoal(pEdict, pBot->curr_waypoint_index,
+                                         team, W_FL_GOAL);
+
+         pBot->waypoint_goal = index;  // goal index or -1
+
+         pBot->waypoint_near_flag = FALSE;
       }
 
       // check if the bot is carrying the flag/card/ball...

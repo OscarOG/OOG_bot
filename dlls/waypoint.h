@@ -42,6 +42,10 @@
 #define W_FL_WEAPON      (1<<17) /* weapon_ entity location */
 #define W_FL_JUMP        (1<<18) /* jump waypoint */
 
+#define W_FL_HUMAN_TOWER (1<<19) /* make human tower here */
+#define W_FL_CLOSE_TO    (1<<20) /* stay close to this waypoint */
+#define W_FL_GOAL        (1<<21) /* objetive / end of level */
+
 #define W_FL_DELETED     (1<<31) /* used by waypoint allocation code */
 
 

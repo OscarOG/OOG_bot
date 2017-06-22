@@ -28,6 +28,7 @@ int botMsgIndex;
 
 // messages created in RegUserMsg which will be "caught"
 int message_VGUI = 0;
+int message_VGUIMenu = 0;
 int message_ShowMenu = 0;
 int message_WeaponList = 0;
 int message_CurWeapon = 0;
@@ -401,253 +402,64 @@ void pfnMessageBegin(int msg_dest, int msg_type, const float *pOrigin, edict_t *
                botMsgEndFunction = NULL;  // no msg end function until known otherwise
                botMsgIndex = index;       // index of bot receiving message
 
-               if (mod_id == VALVE_DLL)
-               {
-                  if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_Valve_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_Valve_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_Valve_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_Valve_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_Valve_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_Valve_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_Valve_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_Valve_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_Valve_Damage;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_Valve_ScreenFade;
-               }
-               else if (mod_id == TFC_DLL)
-               {
-                  if (msg_type == message_VGUI)
-                     botMsgFunction = BotClient_TFC_VGUI;
-                  else if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_TFC_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_TFC_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_TFC_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_TFC_AmmoPickup;
-                  else if (msg_type == message_SecAmmoVal)
-                     botMsgFunction = BotClient_TFC_SecAmmoVal;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_TFC_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_TFC_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_TFC_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_TFC_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_TFC_Damage;
-                  else if (msg_type == message_TextMsg)
-                  {
-                     botMsgFunction = BotClient_TFC_TextMsg;
-                     botMsgEndFunction = BotClient_TFC_TextMsg;
-                  }
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_TFC_ScreenFade;
-               }
-               else if (mod_id == CSTRIKE_DLL)
-               {
-                  if (msg_type == message_VGUI)
-                     botMsgFunction = BotClient_CS_VGUI;
-                  else if (msg_type == message_ShowMenu)
-                     botMsgFunction = BotClient_CS_ShowMenu;
-                  else if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_CS_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_CS_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_CS_AmmoX;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_CS_WeaponPickup;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_CS_AmmoPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_CS_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_CS_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_CS_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_CS_Damage;
-                  else if (msg_type == message_Money)
-                     botMsgFunction = BotClient_CS_Money;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_CS_ScreenFade;
-               }
-               else if (mod_id == GEARBOX_DLL)
-               {
-                  if (msg_type == message_VGUI)
-                     botMsgFunction = BotClient_Gearbox_VGUI;
-                  else if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_Gearbox_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_Gearbox_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_Gearbox_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_Gearbox_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_Gearbox_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_Gearbox_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_Gearbox_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_Gearbox_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_Gearbox_Damage;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_Gearbox_ScreenFade;
-               }
-               else if (mod_id == FRONTLINE_DLL)
-               {
-                  if (msg_type == message_VGUI)
-                  {
-                     botMsgFunction = BotClient_FLF_VGUI;
-                     botMsgEndFunction = BotClient_FLF_VGUI;
-                  }
-                  else if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_FLF_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_FLF_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_FLF_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_FLF_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_FLF_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_FLF_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_FLF_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_FLF_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_FLF_Damage;
-                  else if (msg_type == message_TextMsg)
-                  {
-                     botMsgFunction = BotClient_FLF_TextMsg;
-                     botMsgEndFunction = BotClient_FLF_TextMsg;
-                  }
-                  else if (msg_type == message_WarmUp)
-                     botMsgFunction = BotClient_FLF_WarmUp;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_FLF_ScreenFade;
-                  else if (msg_type == message_HideWeapon)
-                     botMsgFunction = BotClient_FLF_HideWeapon;
-               }
-               else if (mod_id == HOLYWARS_DLL)
-               {
-                  if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_Valve_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_Valve_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_Valve_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_Valve_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_Valve_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_Valve_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_Valve_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_Valve_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_Valve_Damage;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_Valve_ScreenFade;
-                  else if (msg_type == message_GameMode)
-                     botMsgFunction = BotClient_HolyWars_GameMode;
-                  else if (msg_type == message_HudText)
-                     botMsgFunction = BotClient_HolyWars_HudText;
-               }
-               else if (mod_id == DMC_DLL)
-               {
-                  if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_DMC_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_DMC_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_DMC_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_DMC_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_DMC_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_DMC_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_DMC_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_DMC_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_DMC_Damage;
-               }
-			   else if (mod_id == CONFORCE_DLL)
-               {
-                  if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_CF_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_CF_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_CF_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_CF_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_CF_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_CF_ItemPickup;
-				  else if (msg_type == message_ShowMenu)
-                     botMsgFunction = BotClient_CF_ShowMenu;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_CF_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_CF_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_CF_Damage;
-				  else if (msg_type == message_Money)
-                     botMsgFunction = BotClient_CF_Money;
-				  else if (msg_type == message_BarterArea)
-                     botMsgFunction = BotClient_CF_BarterArea;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_CF_ScreenFade;
-               }
-			   else if (mod_id == SVEN_DLL)
-               {
-                  if (msg_type == message_WeaponList)
-                     botMsgFunction = BotClient_SC_WeaponList;
-                  else if (msg_type == message_CurWeapon)
-                     botMsgFunction = BotClient_SC_CurrentWeapon;
-                  else if (msg_type == message_AmmoX)
-                     botMsgFunction = BotClient_SC_AmmoX;
-                  else if (msg_type == message_AmmoPickup)
-                     botMsgFunction = BotClient_SC_AmmoPickup;
-                  else if (msg_type == message_WeapPickup)
-                     botMsgFunction = BotClient_SC_WeaponPickup;
-                  else if (msg_type == message_ItemPickup)
-                     botMsgFunction = BotClient_SC_ItemPickup;
-                  else if (msg_type == message_Health)
-                     botMsgFunction = BotClient_SC_Health;
-                  else if (msg_type == message_Battery)
-                     botMsgFunction = BotClient_SC_Battery;
-                  else if (msg_type == message_Damage)
-                     botMsgFunction = BotClient_SC_Damage;
-                  else if (msg_type == message_ScreenFade)
-                     botMsgFunction = BotClient_SC_ScreenFade;
-               }
-            }
+               if (msg_type == message_WeaponList)
+				   botMsgFunction = BotClient_Generic_WeaponList;
+
+			   if (msg_type == message_CurWeapon)
+				   botMsgFunction = BotClient_Generic_CurrentWeapon;
+
+			   if (msg_type == message_AmmoX)
+				   botMsgFunction = BotClient_Generic_AmmoX;
+
+			   if (msg_type == message_AmmoPickup)
+				   botMsgFunction = BotClient_Generic_AmmoPickup;
+
+			   if (msg_type == message_Damage)
+				   botMsgFunction = BotClient_Generic_Damage;
+
+			   if (msg_type == message_ScreenFade)
+				   botMsgFunction = BotClient_Generic_ScreenFade;
+
+			   if (msg_type == message_VGUI)
+			   {
+				   if (mod_id == GEARBOX_DLL)
+					   botMsgFunction = BotClient_Gearbox_VGUI;
+				   else if (mod_id == CSTRIKE_DLL)
+					   botMsgFunction = BotClient_CS_VGUI;
+				   else if (mod_id == TFC_DLL)
+					   botMsgFunction = BotClient_TFC_VGUI;
+			   }
+
+			   if (msg_type == message_ShowMenu)
+			   {
+				   if (mod_id == CSTRIKE_DLL)
+					   botMsgFunction = BotClient_CS_ShowMenu;
+				   else if (mod_id == CONFORCE_DLL)
+					   botMsgFunction = BotClient_CF_ShowMenu;
+				   else if (mod_id == SVEN_DLL)
+					   botMsgFunction = BotClient_SC_ShowMenu;
+				   else if (mod_id == BB_DLL)
+					   botMsgFunction = BotClient_BB_ShowMenu;
+			   }
+
+			   if (msg_type == message_Money)
+			   {
+				   if (mod_id == CSTRIKE_DLL)
+					   botMsgFunction = BotClient_CS_Money;
+				   else if (mod_id == CONFORCE_DLL)
+					   botMsgFunction = BotClient_CF_Money;
+			   }
+
+			   if (mod_id == CONFORCE_DLL)
+			   {
+				   if (msg_type == message_Health)
+					   botMsgFunction = BotClient_Generic_Health; //simplificar
+				   else if (msg_type == message_Battery)
+					   botMsgFunction = BotClient_Generic_Battery; //simplificar
+				   else if (msg_type == message_BarterArea)
+					   botMsgFunction = BotClient_CF_BarterArea;
+			   }
+			}
          }
       }
       else if (msg_dest == MSG_ALL)
@@ -655,56 +467,17 @@ void pfnMessageBegin(int msg_dest, int msg_type, const float *pOrigin, edict_t *
          botMsgFunction = NULL;  // no msg function until known otherwise
          botMsgIndex = -1;       // index of bot receiving message (none)
 
-         if (mod_id == VALVE_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_Valve_DeathMsg;
-         }
-         else if (mod_id == TFC_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_TFC_DeathMsg;
-         }
-         else if (mod_id == CSTRIKE_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_CS_DeathMsg;
-         }
-         else if (mod_id == GEARBOX_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_Gearbox_DeathMsg;
-         }
-         else if (mod_id == FRONTLINE_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_FLF_DeathMsg;
-            else if (msg_type == message_WarmUp)
-               botMsgFunction = BotClient_FLF_WarmUpAll;
-            else if (msg_type == message_WinMessage)
-               botMsgFunction = BotClient_FLF_WinMessage;
-         }
-         else if (mod_id == HOLYWARS_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_Valve_DeathMsg;
-         }
-         else if (mod_id == DMC_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_DMC_DeathMsg;
-         }
-		 else if (mod_id == CONFORCE_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_CF_DeathMsg;
-         }
-		 else if (mod_id == SVEN_DLL)
-         {
-            if (msg_type == message_DeathMsg)
-               botMsgFunction = BotClient_SC_DeathMsg;
-         }
+         if (msg_type == message_DeathMsg)
+			 botMsgFunction = BotClient_Generic_DeathMsg;
       }
+   }
+   else
+   {
+	   botMsgFunction = NULL;  // no msg function until known otherwise
+	   botMsgIndex = -1;       // index of bot receiving message (none)
+
+	   if (msg_type == message_WeaponList)
+		   botMsgFunction = BotClient_Generic_WeaponList;
    }
 
    (*g_engfuncs.pfnMessageBegin)(msg_dest, msg_type, pOrigin, ed);
@@ -928,286 +701,56 @@ int pfnRegUserMsg(const char *pszName, int iSize)
 	  fclose(fp);
 #endif
 
-      if (mod_id == VALVE_DLL)
-      {
-         if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-      }
-      else if (mod_id == TFC_DLL)
-      {
-         if (strcmp(pszName, "VGUIMenu") == 0)
-            message_VGUI = msg;
-         else if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "SecAmmoVal") == 0)
-            message_SecAmmoVal = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "TextMsg") == 0)
-            message_TextMsg = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-      }
-      else if (mod_id == CSTRIKE_DLL)
-      {
-         if (strcmp(pszName, "VGUIMenu") == 0)
-            message_VGUI = msg;
-         else if (strcmp(pszName, "ShowMenu") == 0)
-            message_ShowMenu = msg;
-         else if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "Money") == 0)
-            message_Money = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-      }
-      else if (mod_id == GEARBOX_DLL)
-      {
-         if (strcmp(pszName, "VGUIMenu") == 0)
-            message_VGUI = msg;
-         else if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-      }
-      else if (mod_id == FRONTLINE_DLL)
-      {
-         if (strcmp(pszName, "VGUIMenu") == 0)
-            message_VGUI = msg;
-         else if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "TextMsg") == 0)
-            message_TextMsg = msg;
-         else if (strcmp(pszName, "WarmUp") == 0)
-            message_WarmUp = msg;
-         else if (strcmp(pszName, "WinMessage") == 0)
-            message_WinMessage = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-         else if (strcmp(pszName, "HideWeapon") == 0)
-            message_HideWeapon = msg;
-      }
-      else if (mod_id == HOLYWARS_DLL)
-      {
-         if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-         else if (strcmp(pszName, "Halo") == 0)
-            message_Halo = msg;
-         else if (strcmp(pszName, "GameMode") == 0)
-            message_GameMode = msg;
-         else if (strcmp(pszName, "HudText") == 0)
-            message_HudText = msg;
-      }
-      else if (mod_id == DMC_DLL)
-      {
-         if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-      }
-	  else if (mod_id == CONFORCE_DLL)
-      {
-		 if (strcmp(pszName, "VGUIMenu") == 0)
-            message_VGUI = msg;
-         else if (strcmp(pszName, "ShowMenu") == 0)
-            message_ShowMenu = msg;
-         else if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "Money") == 0)
-            message_Money = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "BarterArea") == 0)
-            message_BarterArea = msg;
-      }
-	  else if (mod_id == SVEN_DLL)
-      {
-         if (strcmp(pszName, "WeaponList") == 0)
-            message_WeaponList = msg;
-         else if (strcmp(pszName, "CurWeapon") == 0)
-            message_CurWeapon = msg;
-         else if (strcmp(pszName, "AmmoX") == 0)
-            message_AmmoX = msg;
-         else if (strcmp(pszName, "AmmoPickup") == 0)
-            message_AmmoPickup = msg;
-         else if (strcmp(pszName, "WeapPickup") == 0)
-            message_WeapPickup = msg;
-         else if (strcmp(pszName, "ItemPickup") == 0)
-            message_ItemPickup = msg;
-         else if (strcmp(pszName, "Health") == 0)
-            message_Health = msg;
-         else if (strcmp(pszName, "Battery") == 0)
-            message_Battery = msg;
-         else if (strcmp(pszName, "Damage") == 0)
-            message_Damage = msg;
-         else if (strcmp(pszName, "DeathMsg") == 0)
-            message_DeathMsg = msg;
-         else if (strcmp(pszName, "SayText") == 0)
-            message_SayText = msg;
-         else if (strcmp(pszName, "ScreenFade") == 0)
-            message_ScreenFade = msg;
-      }
+    if (strcmp(pszName, "WeaponList") == 0)
+		message_WeaponList = msg;
+
+	if (strcmp(pszName, "CurWeapon") == 0)
+		message_CurWeapon = msg;
+
+	if (strcmp(pszName, "AmmoX") == 0)
+		message_AmmoX = msg;
+
+	if (strcmp(pszName, "AmmoPickup") == 0)
+		message_AmmoPickup = msg;
+
+	if (strcmp(pszName, "Damage") == 0)
+		message_Damage = msg;
+
+	if (strcmp(pszName, "DeathMsg") == 0)
+		message_DeathMsg = msg;
+
+	if (strcmp(pszName, "ScreenFade") == 0)
+		message_ScreenFade = msg;
+
+	if (strcmp(pszName, "VGUIMenu") == 0)
+	{
+		if ((mod_id == GEARBOX_DLL) || (mod_id == CSTRIKE_DLL) ||
+			(mod_id == TFC_DLL))
+			message_VGUI = msg;
+	}
+
+	if (strcmp(pszName, "ShowMenu") == 0)
+	{
+		if ((mod_id == CSTRIKE_DLL) ||
+			(mod_id == CONFORCE_DLL))
+			message_VGUI = msg;
+	}
+
+	if (strcmp(pszName, "Money") == 0)
+	{
+		if ((mod_id == CSTRIKE_DLL) ||
+			(mod_id == CONFORCE_DLL))
+			message_Money = msg;
+	}
+
+	if (mod_id == CONFORCE_DLL)
+	{
+		if (strcmp(pszName, "BarterArea") == 0)
+			message_BarterArea = msg;
+	}
    }
 
-   return msg;
+	return msg;
 }
 void pfnAnimationAutomove(const edict_t* pEdict, float flTime)
 {

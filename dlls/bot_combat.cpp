@@ -362,29 +362,29 @@ bot_weapon_select_t cf_weapon_select[] = {
 
 //	sven co-op
 bot_weapon_select_t sc_weapon_select[] = {
-   {SC_WEP_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
+   {VALVE_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
     100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
+   {VALVE_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
     30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
+   {VALVE_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
     50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
+   {VALVE_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
     100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
+   {VALVE_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
     100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
-   {SC_WEP_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
+   {VALVE_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
     100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_357, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
+   {VALVE_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
     100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
+   {VALVE_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
     100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_9MMAR, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
+   {VALVE_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
     100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
+   {VALVE_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
+   {VALVE_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
     100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {SC_WEP_9MMHANDGUN, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
+   {VALVE_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
     100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
@@ -798,40 +798,40 @@ bot_fire_delay_t cf_fire_delay[] = {
 
 //	sven co-op
 bot_fire_delay_t sc_fire_delay[] = {
-   {SC_WEP_CROWBAR,
+   {VALVE_WEAPON_CROWBAR,
     0.3, {0.0, 0.2, 0.3, 0.4, 0.6}, {0.1, 0.3, 0.5, 0.7, 1.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_HANDGRENADE,
+   {VALVE_WEAPON_HANDGRENADE,
     0.1, {1.0, 2.0, 3.0, 4.0, 5.0}, {3.0, 4.0, 5.0, 6.0, 7.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_SNARK,
+   {VALVE_WEAPON_SNARK,
     0.1, {0.0, 0.1, 0.2, 0.4, 0.6}, {0.1, 0.2, 0.5, 0.7, 1.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_EGON,
+   {VALVE_WEAPON_EGON,
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_GAUSS,
+   {VALVE_WEAPON_GAUSS,
     0.2, {0.0, 0.2, 0.3, 0.5, 1.0}, {0.1, 0.3, 0.5, 0.8, 1.2},
     1.0, {0.2, 0.3, 0.5, 0.8, 1.2}, {0.5, 0.7, 1.0, 1.5, 2.0}},
-   {SC_WEP_SHOTGUN,
+   {VALVE_WEAPON_SHOTGUN,
     0.75, {0.0, 0.2, 0.4, 0.6, 0.8}, {0.25, 0.5, 0.8, 1.2, 2.0},
     1.5, {0.0, 0.2, 0.4, 0.6, 0.8}, {0.25, 0.5, 0.8, 1.2, 2.0}},
-   {SC_WEP_357,
+   {VALVE_WEAPON_PYTHON,
     0.75, {0.0, 0.2, 0.4, 1.0, 1.5}, {0.25, 0.5, 0.8, 1.3, 2.2},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_HORNETGUN,
+   {VALVE_WEAPON_HORNETGUN,
     0.25, {0.0, 0.25, 0.4, 0.6, 1.0}, {0.1, 0.4, 0.7, 1.0, 1.5},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_9MMAR,
+   {VALVE_WEAPON_MP5,
     0.1, {0.0, 0.1, 0.25, 0.4, 0.5}, {0.1, 0.3, 0.45, 0.65, 0.8},
     1.0, {0.0, 0.4, 0.7, 1.0, 1.4}, {0.3, 0.7, 1.0, 1.6, 2.0}},
-   {SC_WEP_CROSSBOW,
+   {VALVE_WEAPON_CROSSBOW,
     0.75, {0.0, 0.2, 0.5, 0.8, 1.0}, {0.25, 0.4, 0.7, 1.0, 1.3},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_RPG,
+   {VALVE_WEAPON_RPG,
     1.5, {1.0, 2.0, 3.0, 4.0, 5.0}, {3.0, 4.0, 5.0, 6.0, 7.0},
     0.0, {0.0, 0.0, 0.0, 0.0, 0.0}, {0.0, 0.0, 0.0, 0.0, 0.0}},
-   {SC_WEP_9MMHANDGUN,
+   {VALVE_WEAPON_GLOCK,
     0.3, {0.0, 0.1, 0.2, 0.3, 0.4}, {0.1, 0.2, 0.3, 0.4, 0.5},
     0.2, {0.0, 0.0, 0.1, 0.1, 0.2}, {0.1, 0.1, 0.2, 0.2, 0.4}},
    /* terminator */
@@ -1803,7 +1803,7 @@ bool BotFireWeapon( Vector v_enemy, bot_t *pBot, int weapon_choice)
              ((mod_id == HOLYWARS_DLL) && (iId == HW_WEAPON_JACKHAMMER)) ||
              ((mod_id == DMC_DLL) && (iId == DMC_WEAPON_AXE)) ||
 			 ((mod_id == CONFORCE_DLL) && (iId == CF_WEAPON_KNIFE)) ||
-			 ((mod_id == SVEN_DLL) && (iId == SC_WEP_CROWBAR)))
+			 ((mod_id == SVEN_DLL) && (iId == VALVE_WEAPON_CROWBAR)))
          {
             // check if bot needs to duck down to hit enemy...
             if (pBot->pBotEnemy->v.origin.z < (pEdict->v.origin.z - 30))
@@ -1907,7 +1907,7 @@ void BotShootAtEnemy( bot_t *pBot )
        ((mod_id == HOLYWARS_DLL) && (pBot->current_weapon.iId == HW_WEAPON_ROCKETLAUNCHER )) ||
        ((mod_id == DMC_DLL) && (pBot->current_weapon.iId == DMC_WEAPON_ROCKET1)) ||
 	   ((mod_id == CONFORCE_DLL) && (pBot->current_weapon.iId == CF_WEAPON_M72A1)) ||
-	   ((mod_id == SVEN_DLL) && (pBot->current_weapon.iId == SC_WEP_RPG)))
+	   ((mod_id == SVEN_DLL) && (pBot->current_weapon.iId == VALVE_WEAPON_RPG)))
    {
       Vector v_src, v_dest;
       TraceResult tr;
