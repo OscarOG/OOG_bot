@@ -31,16 +31,25 @@ Commands are:
 
 addbot    -   add a bot to the game
 
+
 waypoint on   -   show waypoints (if any)
+
 waypoint add    -   add a waypoint in current user position
+
 waypoint del    -   delete current nearest to player waypoint
+
 waypoint menu   -   show a menu for current nearest to player waypoint for special waypoint flags
 
+
 pathwaypoint on   -   show paths from one waypoint to other
+
 pathwaypoint add1 / add2    -   manually add a path from waypoint A (add1) to waypoint B (add2)
+
 pathwaypoint del1 / del2    -   manually delete a path from waypoint A (del1) to waypoint B (del2)
+
 
 Waypointing is a very important part for a good bot handling on maps.
 
 It´s a very good idea to bind the commands listed above to simplify the work of waypointing maps.
+
 Ex: bind c "waypoint add"
