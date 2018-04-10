@@ -9,6 +9,8 @@
 #include "extdll.h"
 #include "util.h"
 #include "cbase.h"
+#include "monsters.h"
+#include "schedule.h"
 
 #include "bot.h"
 #include "bot_func.h"
@@ -275,7 +277,7 @@ void BotNameInit( void )
    char name_buffer[80];
    int length, index;
 
-   UTIL_BuildFileName(bot_name_filename, "HPB_bot_names.txt", NULL);
+   UTIL_BuildFileName(bot_name_filename, "OOG_bot_names.txt", NULL);
 
    bot_name_fp = fopen(bot_name_filename, "r");
 
@@ -305,7 +307,7 @@ void BotNameInit( void )
 
          if (name_buffer[0] != 0)
          {
-            strncpy(bot_names[number_names], name_buffer, BOT_NAME_LEN);
+            strncpy_s(bot_names[number_names], name_buffer, BOT_NAME_LEN);
 
             number_names++;
          }
@@ -423,7 +425,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
       }
       else
       {
-         strncpy( c_skin, arg1, BOT_SKIN_LEN-1 );
+         strncpy_s( c_skin, arg1, BOT_SKIN_LEN-1 );
          c_skin[BOT_SKIN_LEN] = 0;  // make sure c_skin is null terminated
       }
 
@@ -470,7 +472,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
          if (stat(filename, &stat_str) != 0)
          {
-            sprintf(filename, "valve/models/player/%s", c_skin);
+            sprintf_s(filename, "valve/models/player/%s", c_skin);
 
             UTIL_Pathname_Convert(filename);
 
@@ -478,7 +480,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
             {
                char err_msg[80];
 
-               sprintf( err_msg, "model \"%s\" is unknown.\n", c_skin );
+               sprintf_s( err_msg, "model \"%s\" is unknown.\n", c_skin );
                if (pPlayer)
                   ClientPrint(pPlayer, HUD_PRINTNOTIFY, err_msg );
                if (IsDedicatedServer)
@@ -500,7 +502,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
          if ((arg2 != NULL) && (*arg2 != 0))
          {
-            strncpy( c_name, arg2, BOT_NAME_LEN-1 );
+            strncpy_s( c_name, arg2, BOT_NAME_LEN-1 );
             c_name[BOT_NAME_LEN] = 0;  // make sure c_name is null terminated
          }
          else
@@ -510,7 +512,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
             else
             {
                // copy the name of the model to the bot's name...
-               strncpy( c_name, arg1, BOT_NAME_LEN-1 );
+               strncpy_s( c_name, arg1, BOT_NAME_LEN-1 );
                c_name[BOT_NAME_LEN] = 0;  // make sure c_skin is null terminated
             }
          }
@@ -592,7 +594,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
    if (FNullEnt( BotEnt ))
    {
       if (pPlayer)
-         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Max. Players reached.  Can't create HPB bot!\n");
+         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Max. Players reached.  Can't create OOG bot!\n");
    }
    else
    {
@@ -604,7 +606,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
       if (IsDedicatedServer)
          printf("Creating HPB bot...\n");
       else if (pPlayer)
-         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Creating HPB bot...\n");
+         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Creating OOG bot...\n");
 
       index = 0;
       while ((bots[index].is_used) && (index < 32))
@@ -612,7 +614,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
       if (index == 32)
       {
-         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Can't create HPB bot!\n");
+         ClientPrint( pPlayer, HUD_PRINTNOTIFY, "Can't create OOG bot!\n");
          return;
       }
 
@@ -629,7 +631,7 @@ void BotCreate( edict_t *pPlayer, const char *arg1, const char *arg2,
 
       // is this a MOD that supports model colors AND it's not teamplay?
       if (((mod_id == VALVE_DLL) || (mod_id == DMC_DLL) ||
-		  (mod_id == SVEN_DLL) || (mod_id == GEARBOX_DLL) ||
+		  (mod_id == SVEN_DLL) || (mod_id == GEARBOX_DLL) || (mod_id == DECAY_DLL) ||
 		  (mod_id == HOLYWARS_DLL) && (is_team_play == FALSE)))
       {
          SET_CLIENT_KEY_VALUE( clientIndex, infobuffer, "model", c_skin );
@@ -887,7 +889,7 @@ void BotLogoInit(void)
 
 #endif
 
-   UTIL_BuildFileName(bot_logo_filename, "HPB_bot_logo.cfg", NULL);
+   UTIL_BuildFileName(bot_logo_filename, "OOG_bot_logo.cfg", NULL);
 
    bot_logo_fp = fopen(bot_logo_filename, "r");
 
@@ -1029,7 +1031,7 @@ void BotFindItem( bot_t *pBot )
 
    min_distance = radius + 1.0;
 
-   while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
+   while (( pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
    {
       can_pickup = FALSE;  // assume can't use it until known otherwise
 
@@ -1073,15 +1075,15 @@ void BotFindItem( bot_t *pBot )
                float distance = (vecEnd - vecStart).Length( );
 
                // use the ladder about 100% of the time, if haven't
-               // used a ladder in at least 5 seconds...
+               // used a ladder in at least 15 seconds...
                if ((RANDOM_LONG(1, 100) <= 100) &&
-                   ((pBot->f_end_use_ladder_time + 5.0) < gpGlobals->time))
+                   ((pBot->f_end_use_ladder_time + 15.0) < gpGlobals->time)) // valor original 5.0
                {
                   // if close to ladder...
                   if (distance < 100)
                   {
                      // don't avoid walls for a while
-                     pBot->f_dont_avoid_wall_time = gpGlobals->time + 5.0;
+                     pBot->f_dont_avoid_wall_time = gpGlobals->time + 7.0; // valor original 5.0
                   }
 
                   can_pickup = TRUE;
@@ -1093,7 +1095,7 @@ void BotFindItem( bot_t *pBot )
 			 pBot->pBotEnemy = pent;
 			 pBot->f_move_speed = 0;
 			 pBot->f_pause_time = 0;
-		 }	*/
+		 } */
          else
          {
             // trace a line from bot's eyes to func_ entity...
@@ -1106,7 +1108,7 @@ void BotFindItem( bot_t *pBot )
                // find distance to item for later use...
                float distance = (vecEnd - vecStart).Length( );
 
-               // check if entity is wall mounted health charger...
+               // check if entity is wall mounted health charger or a scientist...
                if (strcmp("func_healthcharger", item_name) == 0)
                {
                   // check if the bot can use this item and
@@ -1166,8 +1168,6 @@ void BotFindItem( bot_t *pBot )
                            // don't avoid walls for a while
                            pBot->f_dont_avoid_wall_time = gpGlobals->time + 5.0;
                         }
-
-                        can_pickup = TRUE;
                      }
                   }
                   else
@@ -1216,15 +1216,40 @@ void BotFindItem( bot_t *pBot )
             }
          }
       }
-	  else if ((strcmp("trigger_changelevel", item_name) == 0) ||
-			   (strcmp("trigger_teleport", item_name) == 0))
+	  else if (strcmp("trigger_changelevel", item_name) == 0)
 	  {
-		  if (BotEntityIsVisible( pBot, pent->v.origin ))
+		  // BModels have 0,0,0 for origin so must use VecBModelOrigin...
+		  entity_origin = VecBModelOrigin(pent);
+
+		  vecStart = pEdict->v.origin + pEdict->v.view_ofs;
+		  vecEnd = entity_origin;
+
+		  angle_to_entity = BotInFieldOfView(pBot, vecEnd - vecStart);
+
+		  // find distance to item
+		  float distance = (vecEnd - vecStart).Length();
+
+		  if ((distance < PLAYER_SEARCH_RADIUS) && (angle_to_entity <= 10))
 		  {
-			  //float distance = (pent->v.origin - pEdict->v.origin).Length( );
-			  //if (distance <= 100)
-			  pPickupEntity = pent;
-			  pickup_origin = pent->v.origin;
+			  pEdict->v.button |= IN_FORWARD;
+		  }
+	  }
+	  else if (strcmp("trigger_teleport", item_name) == 0)
+	  {
+		  // BModels have 0,0,0 for origin so must use VecBModelOrigin...
+		  entity_origin = VecBModelOrigin(pent);
+
+		  vecStart = pEdict->v.origin + pEdict->v.view_ofs;
+		  vecEnd = entity_origin;
+
+		  angle_to_entity = BotInFieldOfView(pBot, vecEnd - vecStart);
+
+		  // find distance to item
+		  float distance = (vecEnd - vecStart).Length();
+
+		  if ((distance < PLAYER_SEARCH_RADIUS) && (angle_to_entity <= 10))
+		  {
+			  pEdict->v.button |= IN_FORWARD;
 		  }
 	  }
       else  // everything else...
@@ -1516,6 +1541,19 @@ bool BotLookForGrenades( bot_t *pBot )
                return TRUE;
          }
       }
+	  else if (mod_id == DECAY_DLL)
+      {
+         if (FInViewCone( &entity_origin, pEdict ) &&
+             FVisible( entity_origin, pEdict ))
+         {
+            if (strcmp("grenade", classname) == 0)
+               return TRUE;
+            if (strcmp("monster_satchel", classname) == 0)
+               return TRUE;
+            if (strcmp("monster_snark", classname) == 0)
+               return TRUE;
+         }
+      }
 	  else if (mod_id == CONFORCE_DLL)
       {
          if (FInViewCone( &entity_origin, pEdict ) &&
@@ -1632,8 +1670,7 @@ void BotThink( bot_t *pBot )
    {
       BotStartGame( pBot );
 
-      g_engfuncs.pfnRunPlayerMove( pEdict, pEdict->v.v_angle, pBot->f_move_speed,
-                                   0, 0, pEdict->v.button, 0, pBot->msecval);
+      g_engfuncs.pfnRunPlayerMove( pEdict, pEdict->v.v_angle, pBot->f_move_speed, 0, 0, pEdict->v.button, 0, pBot->msecval);
 
       return;
    }
@@ -1980,7 +2017,7 @@ void BotThink( bot_t *pBot )
                   pBot->pBotEnemy = BotFindEnemy( pBot );
             }
          }
-		 else if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+		 else if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
 		 {
 			 BotLookForEnemy(pBot);
 		 }
@@ -2399,7 +2436,7 @@ void BotThink( bot_t *pBot )
                // go handle the ladder movement
                BotOnLadder( pBot, moved_distance );
 
-               pBot->f_dont_avoid_wall_time = gpGlobals->time + 2.0;
+               pBot->f_dont_avoid_wall_time = gpGlobals->time + 2.0; // valor original + 2.0
                pBot->f_end_use_ladder_time = gpGlobals->time;
             }
             else
@@ -2488,10 +2525,10 @@ void BotThink( bot_t *pBot )
             }
 
             // check if bot is on a ladder and has been on a ladder for
-            // more than 5 seconds...
+            // more than 15 seconds...
             if ((pEdict->v.movetype == MOVETYPE_FLY) &&
                 (pBot->f_start_use_ladder_time > 0.0) &&
-                ((pBot->f_start_use_ladder_time + 5.0) <= gpGlobals->time))
+                ((pBot->f_start_use_ladder_time + 15.0) <= gpGlobals->time))
             {
                // bot is stuck on a ladder...
 

@@ -1,10 +1,10 @@
-//
-// HPB_bot - botman's High Ping Bastard bot
-//
-// (http://planethalflife.com/botman/)
-//
-// bot_client.h
-//
+//////////////////////////////////////////////
+// HPB_bot - botman's High Ping Bastard bot //
+//                                          //
+// (http://planethalflife.com/botman/)      //
+//                                          //
+// bot_client.h                             //
+//////////////////////////////////////////////
 
 void BotClient_TFC_VGUI(void *p, int bot_index);
 void BotClient_CS_VGUI(void *p, int bot_index);

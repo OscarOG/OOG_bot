@@ -1,10 +1,10 @@
-//
-// HPB_bot - botman's High Ping Bastard bot
-//
-// (http://planethalflife.com/botman/)
-//
-// bot_func.h
-//
+//////////////////////////////////////////////
+// HPB_bot - botman's High Ping Bastard bot //
+//                                          //
+// (http://planethalflife.com/botman/)      //
+//                                          //
+// bot_func.h                               //
+//////////////////////////////////////////////
 
 #ifndef BOT_FUNC_H
 #define BOT_FUNC_H
@@ -33,7 +33,6 @@ float BotChangePitch( bot_t *pBot, float speed );
 void BotFixIdealYaw( edict_t *pEdict );
 float BotChangeYaw( bot_t *pBot, float speed );
 bool BotFindWaypoint( bot_t *pBot );
-void BotFindNode( bot_t *pBot );
 bool BotHeadTowardWaypoint( bot_t *pBot );
 void BotOnLadder( bot_t *pBot, float moved_distance );
 void BotUnderWater( bot_t *pBot );

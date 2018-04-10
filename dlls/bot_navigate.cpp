@@ -35,10 +35,9 @@ int max_drop_height = 800;
 
 static FILE *fp;
 char welcome_msg[80];
-int x_welcome_msg_len = 13;
+int x_welcome_msg_len = 7;
 unsigned char x_welcome_msg[] = {
-'H'^0x5a, 'P'^0xa5, 'B'^0x5a, ' '^0xa5, 'b'^0x5a, 'o'^0xa5, 't'^0x5a, ' '^0xa5,
-'-'^0x5a, ' '^0xa5, 'O'^0x5a, 'O'^0xa5, 'G'^0x5a};
+'O'^0x5a, 'O'^0xa5, 'G'^0x5a, '-'^0xa5, 'b'^0x5a, 'o'^0xa5, 't'^0x5a};
 
 
 extern void BotCheckTeamplay(void);
@@ -225,76 +224,6 @@ float BotChangeYaw( bot_t *pBot, float speed )
    return diff;  // return number of degrees left to turn
 }
 
-void BotFindNode(bot_t *pBot)
-{
-	edict_t *pent = NULL;
-    edict_t *pPickupEntity = NULL;
-	edict_t *pEdict = pBot->pEdict;
-	
-	Vector pickup_origin;
-    Vector node_origin;
-	Vector node_dest;
-	Vector vecStart;
-	Vector vecEnd;
-	Vector v_node;
-	Vector bot_angles;
-
-	float radius = 600;
-	float distance;
-	float min_distance;
-	bool should_go = NULL;
-	int angle_to_entity;
-
-	TraceResult tr;
-	
-	min_distance = radius + 1.0;
-	
-	pBot->pBotPickupItem = NULL;
-	
-	while ((pent = UTIL_FindEntityInSphere( pent, pEdict->v.origin, radius )) != NULL)
-	{
-		should_go = FALSE;
-		
-		vecStart = pEdict->v.origin;
-		vecEnd = pent->v.origin;
-		
-		// find angles from bot origin to entity...
-		angle_to_entity = BotInFieldOfView( pBot, vecEnd - vecStart );
-		
-		if ((strcmp(STRING(pent->v.classname), "info_node") == 0))
-		{
-			if (BotEntityIsVisible( pBot, vecEnd ))
-			{
-				// should_go = TRUE;
-				pPickupEntity = pent;
-				pickup_origin = vecEnd;
-			}
-		}
-
-		if (should_go)
-		{
-			distance = (vecEnd - vecStart).Length( );
-			
-			// see if it's the closest item so far...
-			if (distance < min_distance)
-			{
-				min_distance = distance;	// update the minimum distance
-				pPickupEntity = pent;		// remember this entity
-				pickup_origin = vecEnd;  	// remember location of entity
-			}
-		}
-	}
-	if (pPickupEntity != NULL)
-   {
-      // let's head off toward that item...
-      v_node = vecEnd - vecStart;
-      bot_angles = UTIL_VecToAngles( v_node );
-      pEdict->v.ideal_yaw = bot_angles.y;
-      BotFixIdealYaw(pEdict);
-      pBot->pBotPickupItem = pPickupEntity;  // save the item bot is trying to get
-   }
-}
-
 bool BotFindWaypoint( bot_t *pBot )
 {
    int index, select_index;
@@ -318,11 +247,6 @@ bool BotFindWaypoint( bot_t *pBot )
    }
 
    index = WaypointFindPath(&pPath, &path_index, pBot->curr_waypoint_index, team);
-
-   if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
-   {
-	   BotFindNode(pBot);
-   }
 
    while (index != -1)
    {
@@ -443,8 +367,30 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
    // check if the bot has been trying to get to this waypoint for a while...
    if ((pBot->f_waypoint_time + 5.0) < gpGlobals->time)
    {
-      pBot->curr_waypoint_index = -1;  // forget about this waypoint
-      pBot->waypoint_goal = -1;  // also forget about a goal
+	   Vector entity_origin;
+	   Vector vecStart;
+	   Vector vecEnd;
+	   int angle_to_entity;
+
+	   // pent = UTIL_FindEntityInSphere(pent, pEdict->v.origin, 100);
+	   entity_origin = VecBModelOrigin(pent);
+
+	   vecStart = pEdict->v.origin + pEdict->v.view_ofs;
+	   vecEnd = entity_origin;
+
+	   angle_to_entity = BotInFieldOfView(pBot, vecEnd - vecStart);
+
+	   if (angle_to_entity < 10)
+	   {
+		   pEdict->v.button |= IN_FORWARD;
+		   pEdict->v.button |= IN_JUMP;
+		   pEdict->v.button |= IN_DUCK;
+	   }
+   }
+   else if ((pBot->f_waypoint_time + 10.0) < gpGlobals->time)
+   {
+	   pBot->curr_waypoint_index = -1;  // forget about this waypoint
+	   pBot->waypoint_goal = -1;  // also forget about a goal
    }
 
    // check if a goal item exists...
@@ -673,12 +619,7 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
          }
       }
    }
-/*
-   else if ((mod_id == CONFORCE_DLL) && (num_waypoints == 0))
-   {
-	   BotFindNode(pBot);
-   }
-*/
+
    // check if we need to find a waypoint...
    if (pBot->curr_waypoint_index == -1)
    {
@@ -703,6 +644,11 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
             i = WaypointFindReachable(pEdict, REACHABLE_RANGE, team);
       }
 
+	  if ((v_dest.z > v_src.z + 62.0) && (!(waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER)))
+	  {
+		  return FALSE;
+	  }
+
       if (i == -1)
       {
          pBot->curr_waypoint_index = -1;
@@ -725,8 +671,7 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
          v_dest = waypoints[pBot->curr_waypoint_index].origin;
 
          // trace a line from bot's eyes to destination...
-         UTIL_TraceLine( v_src, v_dest, ignore_monsters,
-                         pEdict->v.pContainingEntity, &tr );
+         UTIL_TraceLine( v_src, v_dest, ignore_monsters, pEdict->v.pContainingEntity, &tr );
 
          // check if line of sight to object is blocked (i.e. not visible)
          if (tr.flFraction < 1.0)
@@ -769,41 +714,36 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
 
    // set the minimum distance from waypoint to be considered "touching" it
    if ((waypoints[pBot->curr_waypoint_index].flags & W_FL_CROUCH) ||
-	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP) ||
 	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_SENTRYGUN) ||
 	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_DISPENSER) ||
-	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER) ||
-	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_CLOSE_TO) ||
-	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_HUMAN_TOWER))
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER))
+
 	   min_distance = 20.0;
+
+   else if (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP)
+	   min_distance = 25.0;
+
+   else if ((waypoints[pBot->curr_waypoint_index].flags & W_FL_CLOSE_TO) ||
+			(waypoints[pBot->curr_waypoint_index].flags & W_FL_HUMAN_TOWER))
+	   min_distance = 15.0;
+
    else
-	   min_distance = 40.0;
-/*
-   // if this is a crouch waypoint, bot must be fairly close...
-   if (waypoints[pBot->curr_waypoint_index].flags & W_FL_CROUCH)
-      min_distance = 20.0;
+   {
+	   min_distance = 50.0;
+   }
 
-   if (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP)
-      min_distance = 20.0;
-
-   if (waypoints[pBot->curr_waypoint_index].flags & W_FL_SENTRYGUN)
-      min_distance = 20.0;
-
-   if (waypoints[pBot->curr_waypoint_index].flags & W_FL_DISPENSER)
-      min_distance = 20.0;
-
-   // if this is a ladder waypoint, bot must be fairly close to get on ladder
-   if (waypoints[pBot->curr_waypoint_index].flags & W_FL_LADDER)
-      min_distance = 20.0;
-*/
    // if this is a defenders waypoint, bot must be fairly close...
    if ((mod_id == FRONTLINE_DLL) &&
-       (waypoints[pBot->curr_waypoint_index].flags & W_FL_FLF_DEFEND))
-      min_distance = 20.0;
+	   (waypoints[pBot->curr_waypoint_index].flags & W_FL_FLF_DEFEND))
+   {
+	   min_distance = 20.0;
+   }
 
    // if trying to get out of water, need to get very close to waypoint...
    if (pBot->f_exit_water_time >= gpGlobals->time)
-      min_distance = 20.0;
+   {
+	   min_distance = 20.0;
+   }
 
    touching = FALSE;
 
@@ -814,7 +754,7 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
 
    // are we close enough to a target waypoint...
    if (waypoint_distance < min_distance)
-      touching = TRUE;
+	   touching = TRUE;
 
    // save current distance as previous
    pBot->prev_waypoint_distance = waypoint_distance;
@@ -834,7 +774,8 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
       // check if the next waypoint is a jump waypoint...
       if (waypoints[pBot->curr_waypoint_index].flags & W_FL_JUMP)
       {
-         pEdict->v.button |= IN_JUMP;  // jump here
+         pEdict->v.button |= IN_JUMP;		// jump here
+		 pEdict->v.button |= IN_FORWARD;	// ...y avanza
       }
 
 	  if (waypoints[pBot->curr_waypoint_index].flags & W_FL_HUMAN_TOWER)
@@ -1038,12 +979,11 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
          }
       }
 
-	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
       {
-         // find the nearest flag goal waypoint...
+         // find the nearest goal waypoint...
 
-         index = WaypointFindNearestGoal(pEdict, pBot->curr_waypoint_index,
-                                         team, W_FL_GOAL);
+         index = WaypointFindNearestGoal(pEdict, pBot->curr_waypoint_index, team, W_FL_GOAL);
 
          pBot->waypoint_goal = index;  // goal index or -1
 
@@ -1132,7 +1072,7 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
 
 
          if ((mod_id == VALVE_DLL) || (mod_id == DMC_DLL) ||
-			 (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+			 (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
          {
             if (RANDOM_LONG(1, 100) <= 50)
             {
@@ -1494,29 +1434,80 @@ bool BotHeadTowardWaypoint( bot_t *pBot )
 }
 
 
-void BotOnLadder( bot_t *pBot, float moved_distance )
+void BotOnLadder( bot_t *pBot, float moved_distance ) // ESCALERAS
 {
-   Vector v_src, v_dest, view_angles;
+   static float search_angles[] = { 0.0f, 0.0f, 90.0f, -90.0f, 45.0f, -45.0f, 60.0f, -30.0f, 30.0f, -60.0f, 10.0f, -10.0f,
+	                               20.0f, -20.0f, 40.0f, -40.0f, 50.0f, -50.0f, 70.0f, -70.0f, 80.0f, -80.0f, 9999.9f };
+
+   Vector v_src, v_dest, view_angles, entity_origin, bot_origin;
    TraceResult tr;
+
    float angle = 0.0;
+   float search_dir;
+   float radius = 500;
    bool done = FALSE;
+   char item_name[40];
+   int i;
 
    edict_t *pEdict = pBot->pEdict;
+   edict_t *pent = NULL;
+
+   pent = UTIL_FindEntityInSphere(pent, pEdict->v.origin, radius);
+   entity_origin = VecBModelOrigin(pent);
+   bot_origin = pEdict->v.origin;
 
    // check if the bot has JUST touched this ladder...
    if (pBot->ladder_dir == LADDER_UNKNOWN)
    {
+	   i = 0;
+	   search_dir = RANDOM_LONG(0, 1) ? 1.0f : -1.0f;
+	   search_angles[0] = 0.0f;
+
+	   // add special case to angles, check towards next waypoint
+	   if (pBot->curr_waypoint_index != -1)
+	   {
+		   Vector v_dir = waypoints[pBot->curr_waypoint_index].origin - pEdict->v.origin;
+		   Vector v_to_wp = UTIL_VecToAngles(v_dir);
+
+		   search_angles[0] = v_to_wp.y * search_dir;
+	   }
+
+	   if (search_angles[0] == 0.0f)
+		   i++;
+	   
+		strcpy(item_name, STRING(pent->v.classname));
+
+		if (strcmp(item_name, "func_ladder") == 0)
+		{
+			if ((entity_origin > bot_origin) && (pBot->f_start_use_ladder_time + 15))
+			{
+				pEdict->v.v_angle.y = -90;
+				pEdict->v.button |= IN_FORWARD;
+			}
+			else if ((entity_origin < bot_origin) && (pBot->f_start_use_ladder_time + 15))
+			{
+				pEdict->v.v_angle.y = 90;
+				pEdict->v.button |= IN_FORWARD;
+			}
+		}
+	   
       // try to square up the bot on the ladder...
-      while ((!done) && (angle < 180.0))
+	   while ((!done) && (search_angles[i] <= 90.0f)) // while ((!done) && (angle < 180.0))
       {
+		   angle = search_angles[i] * search_dir;
+
          // try looking in one direction (forward + angle)
+		   view_angles.x = pEdict->v.v_angle.x;
+		   view_angles.y = pEdict->v.v_angle.y + angle;
+		   view_angles.z = 0;
+		   /*
          view_angles = pEdict->v.v_angle;
          view_angles.y = pEdict->v.v_angle.y + angle;
 
          if (view_angles.y < 0.0)
             view_angles.y += 360.0;
          if (view_angles.y > 360.0)
-            view_angles.y -= 360.0;
+            view_angles.y -= 360.0; */
 
          UTIL_MakeVectors( view_angles );
 
@@ -1549,13 +1540,17 @@ void BotOnLadder( bot_t *pBot, float moved_distance )
          else
          {
             // try looking in the other direction (forward - angle)
+			 view_angles.x = pEdict->v.v_angle.x;
+			 view_angles.y = pEdict->v.v_angle.y - angle;
+			 view_angles.z = 0;
+			 /*
             view_angles = pEdict->v.v_angle;
             view_angles.y = pEdict->v.v_angle.y - angle;
 
             if (view_angles.y < 0.0)
                view_angles.y += 360.0;
             if (view_angles.y > 360.0)
-               view_angles.y -= 360.0;
+               view_angles.y -= 360.0; */
 
             UTIL_MakeVectors( view_angles );
 
@@ -1587,7 +1582,8 @@ void BotOnLadder( bot_t *pBot, float moved_distance )
             }
          }
 
-         angle += 10;
+         //angle += 10;
+		 i++;
       }
 
       if (!done)  // if didn't find a wall, just reset ideal_yaw...
@@ -1605,38 +1601,48 @@ void BotOnLadder( bot_t *pBot, float moved_distance )
 
    if (pBot->ladder_dir == LADDER_UP)  // is the bot currently going up?
    {
-      pEdict->v.v_angle.x = -60;  // look upwards
+      // pEdict->v.v_angle.x = -80;  // look upwards
+	  pEdict->v.v_angle.x = 0;
+	  pEdict->v.button |= IN_FORWARD;
 
       // check if the bot hasn't moved much since the last location...
       if ((moved_distance <= 1) && (pBot->f_prev_speed >= 1.0))
       {
          // the bot must be stuck, change directions...
 
-         pEdict->v.v_angle.x = 60;  // look downwards
+         // pEdict->v.v_angle.x = 80;  // look downwards
+		 pEdict->v.v_angle.x = 0;
+		 pEdict->v.button |= IN_BACK;
          pBot->ladder_dir = LADDER_DOWN;
       }
    }
    else if (pBot->ladder_dir == LADDER_DOWN)  // is the bot currently going down?
    {
-      pEdict->v.v_angle.x = 60;  // look downwards
+      // pEdict->v.v_angle.x = 80;  // look downwards
+	  pEdict->v.v_angle.x = 0;
+	  pEdict->v.button |= IN_BACK;
 
       // check if the bot hasn't moved much since the last location...
       if ((moved_distance <= 1) && (pBot->f_prev_speed >= 1.0))
       {
          // the bot must be stuck, change directions...
 
-         pEdict->v.v_angle.x = -60;  // look upwards
+         // pEdict->v.v_angle.x = -80;  // look upwards
+		 pEdict->v.v_angle.x = 0;
+		 pEdict->v.button |= IN_FORWARD;
          pBot->ladder_dir = LADDER_UP;
       }
    }
    else  // the bot hasn't picked a direction yet, try going up...
    {
-      pEdict->v.v_angle.x = -60;  // look upwards
-      pBot->ladder_dir = LADDER_UP;
+	   // pEdict->v.v_angle.x = -100;  // look upwards
+	   pEdict->v.v_angle.x = 0;
+	   pEdict->v.button |= IN_FORWARD;
+	   pBot->ladder_dir = LADDER_UP;
    }
 
    // move forward (i.e. in the direction the bot is looking, up or down)
-   pEdict->v.button |= IN_FORWARD;
+   // pEdict->v.button |= IN_FORWARD;
 }
 
 
@@ -2289,7 +2295,12 @@ bool BotCanDuckUnder( bot_t *pBot )
 
 void BotRandomTurn( bot_t *pBot )
 {
+	edict_t *pEdict = pBot->pEdict;
+
    pBot->f_move_speed = 0;  // don't move while turning
+
+//   if (pEdict->v.movetype == MOVETYPE_FLY)
+	   pEdict->v.button |= IN_JUMP; // jump from ladder
             
    if (RANDOM_LONG(1, 100) <= 10)
    {

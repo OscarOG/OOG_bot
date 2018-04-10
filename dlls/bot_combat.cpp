@@ -13,7 +13,7 @@
 #include "bot.h"
 #include "bot_func.h"
 #include "bot_weapons.h"
-#include "waypoint.h" //	me hace falta?
+#include "waypoint.h" // me hace falta?
 
 extern int mod_id;
 extern bot_weapon_t weapon_defs[MAX_WEAPONS];
@@ -84,310 +84,198 @@ typedef struct
 // the start of the array and least desired should be at the end
 
 bot_weapon_select_t valve_weapon_select[] = {
-   {VALVE_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
-    30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
-    50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
-    100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
-   {VALVE_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
-    100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
-    100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
-    100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
-    100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {VALVE_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0, 30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0, 50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0, 100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
+   {VALVE_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0, 100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0, 100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0, 100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0, 100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t tfc_weapon_select[] = {
-   {TF_WEAPON_AXE, "tf_weapon_axe", 5, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_KNIFE, "tf_weapon_knife", 5, 0.0, 40.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_SPANNER, "tf_weapon_spanner", 5, 0.0, 40.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_MEDIKIT, "tf_weapon_medikit", 5, 0.0, 40.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_SNIPERRIFLE, "tf_weapon_sniperrifle", 5, 300.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, TRUE, FALSE, 1.0, 0.0},
-   {TF_WEAPON_FLAMETHROWER, "tf_weapon_flamethrower", 5, 100.0, 500.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_AC, "tf_weapon_ac", 5, 50.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_GL, "tf_weapon_gl", 5, 300.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_RPG, "tf_weapon_rpg", 5, 300.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_IC, "tf_weapon_ic", 5, 300.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_TRANQ, "tf_weapon_tranq", 5, 40.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_RAILGUN, "tf_weapon_railgun", 5, 40.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_SUPERNAILGUN, "tf_weapon_superng", 5, 40.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_SUPERSHOTGUN, "tf_weapon_supershotgun", 5, 40.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 2, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_AUTORIFLE, "tf_weapon_autorifle", 5, 0.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_SHOTGUN, "tf_weapon_shotgun", 5, 40.0, 400.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {TF_WEAPON_NAILGUN, "tf_weapon_ng", 5, 40.0, 600.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {TF_WEAPON_AXE, "tf_weapon_axe", 5, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_KNIFE, "tf_weapon_knife", 5, 0.0, 40.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_SPANNER, "tf_weapon_spanner", 5, 0.0, 40.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_MEDIKIT, "tf_weapon_medikit", 5, 0.0, 40.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_SNIPERRIFLE, "tf_weapon_sniperrifle", 5, 300.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, TRUE, FALSE, 1.0, 0.0},
+   {TF_WEAPON_FLAMETHROWER, "tf_weapon_flamethrower", 5, 100.0, 500.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_AC, "tf_weapon_ac", 5, 50.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_GL, "tf_weapon_gl", 5, 300.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_RPG, "tf_weapon_rpg", 5, 300.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_IC, "tf_weapon_ic", 5, 300.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_TRANQ, "tf_weapon_tranq", 5, 40.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_RAILGUN, "tf_weapon_railgun", 5, 40.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_SUPERNAILGUN, "tf_weapon_superng", 5, 40.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_SUPERSHOTGUN, "tf_weapon_supershotgun", 5, 40.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 2, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_AUTORIFLE, "tf_weapon_autorifle", 5, 0.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_SHOTGUN, "tf_weapon_shotgun", 5, 40.0, 400.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {TF_WEAPON_NAILGUN, "tf_weapon_ng", 5, 40.0, 600.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t cs_weapon_select[] = {
-   {CS_WEAPON_KNIFE, "weapon_knife", 5, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_M4A1, "weapon_m4a1", 5, 0.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_SG552, "weapon_sg552", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_P90, "weapon_p90", 5, 0.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_MP5NAVY, "weapon_mp5navy", 5, 0.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_AK47, "weapon_ak47", 5, 0.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_AUG, "weapon_aug", 5, 0.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 600.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_UMP45, "weapon_ump45", 5, 0.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_XM1014, "weapon_xm1014", 5, 0.0, 400.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_AWP, "weapon_awp", 5, 0.0, 3500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_G3SG1, "weapon_g3sg1", 5, 0.0, 3500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_M249, "weapon_m249", 5, 0.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_M3, "weapon_m3", 5, 0.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_TMP, "weapon_tmp", 5, 0.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_SCOUT, "weapon_scout", 5, 0.0, 3500.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_DEAGLE, "weapon_deagle", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_USP, "weapon_usp", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_P228, "weapon_p228", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_GLOCK18, "weapon_glock18", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_ELITE, "weapon_usp", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {CS_WEAPON_FIVESEVEN, "weapon_fiveseven", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {CS_WEAPON_KNIFE, "weapon_knife", 5, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_M4A1, "weapon_m4a1", 5, 0.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_SG552, "weapon_sg552", 5, 0.0, 1200.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_P90, "weapon_p90", 5, 0.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_MP5NAVY, "weapon_mp5navy", 5, 0.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_AK47, "weapon_ak47", 5, 0.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_AUG, "weapon_aug", 5, 0.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 600.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_UMP45, "weapon_ump45", 5, 0.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_XM1014, "weapon_xm1014", 5, 0.0, 400.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_AWP, "weapon_awp", 5, 0.0, 3500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_G3SG1, "weapon_g3sg1", 5, 0.0, 3500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_M249, "weapon_m249", 5, 0.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_M3, "weapon_m3", 5, 0.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_TMP, "weapon_tmp", 5, 0.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_SCOUT, "weapon_scout", 5, 0.0, 3500.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_DEAGLE, "weapon_deagle", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_USP, "weapon_usp", 5, 0.0, 1200.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_P228, "weapon_p228", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_GLOCK18, "weapon_glock18", 5, 0.0, 1200.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_ELITE, "weapon_usp", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {CS_WEAPON_FIVESEVEN, "weapon_fiveseven", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t gearbox_weapon_select[] = {
-   {GEARBOX_WEAPON_PIPEWRENCH, "weapon_pipewrench", 3, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_KNIFE, "weapon_knife", 4, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_DISPLACER, "weapon_displacer", 5, 100.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_SPORELAUNCHER, "weapon_sporelauncher", 5, 500.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_SHOCKRIFLE, "weapon_shockrifle", 5, 50.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_SNIPERRIFLE, "weapon_sniperrifle", 5, 50.0, 2500.0, 0.0, 0.0,
-    100, FALSE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
-    30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
-    50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
-    100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
-   {GEARBOX_WEAPON_M249, "weapon_m249", 5, 0.0, 400.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
-    100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_EAGLE, "weapon_eagle", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
-    100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
-    100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {GEARBOX_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
-    100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {GEARBOX_WEAPON_PIPEWRENCH, "weapon_pipewrench", 3, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_KNIFE, "weapon_knife", 4, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_DISPLACER, "weapon_displacer", 5, 100.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_SPORELAUNCHER, "weapon_sporelauncher", 5, 500.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_SHOCKRIFLE, "weapon_shockrifle", 5, 50.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_SNIPERRIFLE, "weapon_sniperrifle", 5, 50.0, 2500.0, 0.0, 0.0, 100, FALSE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0, 30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0, 50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0, 100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
+   {GEARBOX_WEAPON_M249, "weapon_m249", 5, 0.0, 400.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0, 100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_EAGLE, "weapon_eagle", 5, 0.0, 1200.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0, 100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0, 100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {GEARBOX_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0, 100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t frontline_weapon_select[] = {
-   {FLF_WEAPON_HEGRENADE, "weapon_hegrenade", 3, 200.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_FLASHBANG, "weapon_flashbang", 3, 100.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-//   {FLF_WEAPON_KNIFE, "weapon_knife", 3, 0.0, 60.0, 0.0, 0.0,
-//    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_HK21, "weapon_hk21", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_UMP45, "weapon_ump45", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_FAMAS, "weapon_famas", 5, 0.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_MSG90, "weapon_msg90", 5, 0.0, 2500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_SAKO, "weapon_sako", 5, 0.0, 1800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_MP5A2, "weapon_mp5a2", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_AK5, "weapon_ak5", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_RS202M2, "weapon_rs202m2", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_MP5SD, "weapon_mp5sd", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_M4, "weapon_m4", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_SPAS12, "weapon_spas12", 5, 0.0, 900.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_BERETTA, "weapon_beretta", 5, 0.0, 1200.0, 0.0, 1200.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {FLF_WEAPON_MK23, "weapon_mk23", 5, 0.0, 1200.0, 0.0, 1200.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {FLF_WEAPON_HEGRENADE, "weapon_hegrenade", 3, 200.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_FLASHBANG, "weapon_flashbang", 3, 100.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+// {FLF_WEAPON_KNIFE, "weapon_knife", 3, 0.0, 60.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_HK21, "weapon_hk21", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_UMP45, "weapon_ump45", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_FAMAS, "weapon_famas", 5, 0.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_MSG90, "weapon_msg90", 5, 0.0, 2500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_SAKO, "weapon_sako", 5, 0.0, 1800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_MP5A2, "weapon_mp5a2", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_AK5, "weapon_ak5", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_RS202M2, "weapon_rs202m2", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_MP5SD, "weapon_mp5sd", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_M4, "weapon_m4", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_SPAS12, "weapon_spas12", 5, 0.0, 900.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_BERETTA, "weapon_beretta", 5, 0.0, 1200.0, 0.0, 1200.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {FLF_WEAPON_MK23, "weapon_mk23", 5, 0.0, 1200.0, 0.0, 1200.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t holywars_weapon_select[] = {
-   {HW_WEAPON_JACKHAMMER, "weapon_jackhammer", 5, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {HW_WEAPON_MACHINEGUN, "weapon_machinegun", 5, 50.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {HW_WEAPON_RAILGUN, "weapon_railgun", 5, 50.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {HW_WEAPON_DOUBLESHOTGUN, "weapon_doubleshotgun", 5, 50.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 3, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {HW_WEAPON_ROCKETLAUNCHER, "weapon_rocketlauncher", 5, 50.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {HW_WEAPON_JACKHAMMER, "weapon_jackhammer", 5, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {HW_WEAPON_MACHINEGUN, "weapon_machinegun", 5, 50.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {HW_WEAPON_RAILGUN, "weapon_railgun", 5, 50.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {HW_WEAPON_DOUBLESHOTGUN, "weapon_doubleshotgun", 5, 50.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 3, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {HW_WEAPON_ROCKETLAUNCHER, "weapon_rocketlauncher", 5, 50.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 bot_weapon_select_t dmc_weapon_select[] = {
-   {DMC_WEAPON_AXE, "weapon_axe", 2, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_LIGHTNING, "weapon_lightning", 5, 30.0, 1500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_ROCKET1, "weapon_rocket1", 5, 150.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_SUPERNAIL, "weapon_supernail", 5, 50.0, 400.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_DOUBLESHOTGUN, "weapon_doubleshotgun", 5, 50.0, 250.0, 0.0, 0.0,
-    100, TRUE, 100, 2, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_GRENADE1, "weapon_grenade1", 5, 200.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_NAILGUN, "weapon_nailgun", 5, 50.0, 400.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {DMC_WEAPON_SHOTGUN, "weapon_shotgun", 5, 0.0, 250.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {DMC_WEAPON_AXE, "weapon_axe", 2, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_LIGHTNING, "weapon_lightning", 5, 30.0, 1500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_ROCKET1, "weapon_rocket1", 5, 150.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_SUPERNAIL, "weapon_supernail", 5, 50.0, 400.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_DOUBLESHOTGUN, "weapon_doubleshotgun", 5, 50.0, 250.0, 0.0, 0.0, 100, TRUE, 100, 2, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_GRENADE1, "weapon_grenade1", 5, 200.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_NAILGUN, "weapon_nailgun", 5, 50.0, 400.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {DMC_WEAPON_SHOTGUN, "weapon_shotgun", 5, 0.0, 250.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 //	contra-force
 bot_weapon_select_t cf_weapon_select[] = {
-	{CF_WEAPON_SKS45, "weapon_sks45", 5, 30.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_HK33ZF, "weapon_hk33zf", 5, 50.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_MINIMI, "weapon_minimi", 5, 0.0, 800.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_CAR15M203, "weapon_car15m203", 5, 50.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M629, "weapon_m629", 5, 0.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_N213, "weapon_n213", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_MK2GRENADE, "weapon_mk2grenade", 5, 200.0, 700.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M67GRENADE, "weapon_m67grenade", 5, 200.0, 700.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_TYPE56, "weapon_type56", 5, 0.0, 1200.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 300.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_MP5A3, "weapon_mp5a3", 5, 0.0, 150.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M1911, "weapon_m1911", 5, 0.0, 500.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M72A1, "weapon_m72a1", 5, 200.0, 2000.0, 0.0, 0.0,
-    90, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_KNIFE, "weapon_knife", 5, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_AR50, "weapon_ar50", 5, 100.0, 9999.0, 0.0, 0.0,
-    40, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-    {CF_WEAPON_M700, "weapon_m700", 5, 30.0, 1500.0, 0.0, 0.0,
-    30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-	{CF_WEAPON_M870, "weapon_m870", 5, 30.0, 150.0, 0.0, 0.0,
-    10, FALSE, 50, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+	{CF_WEAPON_SKS45, "weapon_sks45", 5, 30.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_HK33ZF, "weapon_hk33zf", 5, 50.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_MINIMI, "weapon_minimi", 5, 0.0, 800.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_CAR15M203, "weapon_car15m203", 5, 50.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_M629, "weapon_m629", 5, 0.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_N213, "weapon_n213", 5, 0.0, 1200.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_MK2GRENADE, "weapon_mk2grenade", 5, 200.0, 700.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_M67GRENADE, "weapon_m67grenade", 5, 200.0, 700.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_TYPE56, "weapon_type56", 5, 0.0, 1200.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_MAC10, "weapon_mac10", 5, 0.0, 300.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_MP5A3, "weapon_mp5a3", 5, 0.0, 150.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_M1911, "weapon_m1911", 5, 0.0, 500.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_M72A1, "weapon_m72a1", 5, 200.0, 2000.0, 0.0, 0.0, 90, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_KNIFE, "weapon_knife", 5, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_AR50, "weapon_ar50", 5, 100.0, 9999.0, 0.0, 0.0, 40, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+    {CF_WEAPON_M700, "weapon_m700", 5, 30.0, 1500.0, 0.0, 0.0, 30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+	{CF_WEAPON_M870, "weapon_m870", 5, 30.0, 150.0, 0.0, 0.0, 10, FALSE, 50, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
     {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 //	sven co-op
 bot_weapon_select_t sc_weapon_select[] = {
-   {VALVE_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0,
-    100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0,
-    30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0,
-    50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0,
-    100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
-   {VALVE_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0,
-    100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0,
-    100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0,
-    100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0,
-    100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0,
-    100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
-   {VALVE_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0,
-    100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+
+   {VALVE_WEAPON_CROWBAR, "weapon_crowbar", 2, 0.0, 50.0, 0.0, 0.0, 100, TRUE, 100, 0, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_HANDGRENADE, "weapon_handgrenade", 5, 250.0, 750.0, 0.0, 0.0, 30, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_SNARK, "weapon_snark", 5, 150.0, 500.0, 0.0, 0.0, 50, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_EGON, "weapon_egon", 5, 0.0, 9999.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, TRUE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_GAUSS, "weapon_gauss", 5, 0.0, 9999.0, 0.0, 9999.0, 100, FALSE, 80, 1, 10, FALSE, FALSE, FALSE, TRUE, 0.0, 0.8},
+   {VALVE_WEAPON_SHOTGUN, "weapon_shotgun", 5, 30.0, 150.0, 30.0, 150.0, 100, FALSE, 70, 1, 2, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_PYTHON, "weapon_357", 5, 30.0, 700.0, 0.0, 0.0, 100, FALSE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_HORNETGUN, "weapon_hornetgun", 5, 30.0, 1000.0, 30.0, 1000.0, 100, TRUE, 50, 1, 4, FALSE, TRUE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_MP5, "weapon_9mmAR", 5, 0.0, 250.0, 300.0, 600.0, 100, FALSE, 90, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_CROSSBOW, "weapon_crossbow", 5, 100.0, 1000.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_RPG, "weapon_rpg", 5, 300.0, 9999.0, 0.0, 0.0, 100, TRUE, 100, 1, 0, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
+   {VALVE_WEAPON_GLOCK, "weapon_9mmhandgun", 5, 0.0, 1200.0, 0.0, 1200.0, 100, TRUE, 70, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0},
    /* terminator */
    {0, "", 0, 0.0, 0.0, 0.0, 0.0, 0, TRUE, 0, 1, 1, FALSE, FALSE, FALSE, FALSE, 0.0, 0.0}
+
 };
 
 // weapon firing delay based on skill (min and max delay for each weapon)
@@ -998,6 +886,73 @@ void BotLookForEnemy(bot_t *pBot)
 			{
 				is_enemy = TRUE;
 			}
+/*			else if (FClassnameIs(pent, "func_breakable"))
+			{
+				if ((BotEntityIsVisible(pBot, vecEnd) && (IsAlive(pent))))
+				{
+					pBot->pBotEnemy = pent;
+					pNewEnemy = pent;
+				}
+//				return R_HT;
+//				pEnemy = m_hEnemy->MyMonsterPointer();
+			} */
+			else 
+			{
+				continue;
+			}
+
+			if (is_enemy)
+			{
+				vecEnd = pent->v.origin;
+
+				if ((BotEntityIsVisible( pBot, vecEnd ) && (IsAlive(pent))))
+				{
+					pBot->pBotEnemy = pent;
+					pNewEnemy = pent;
+				}
+			}
+		}
+	}
+
+	if ((mod_id == DECAY_DLL))
+	{
+
+		pBot->f_pause_time = 0;
+
+		vecStart = pEdict->v.origin;
+
+		while ((pent = UTIL_FindEntityInSphere( pent, vecStart, radius )) != NULL)
+		{
+			strcpy(classname, STRING(pent->v.classname));
+
+			if ((strcmp(classname, "monster_alien_controller") == 0) ||
+				(strcmp(classname, "monster_alien_grunt") == 0) ||
+				(strcmp(classname, "monster_alien_priest") == 0) ||
+				(strcmp(classname, "monster_alien_slave") == 0) ||
+				(strcmp(classname, "monster_apache") == 0) ||
+				(strcmp(classname, "monster_babycrab") == 0) ||
+				(strcmp(classname, "monster_barnacle") == 0) ||
+				(strcmp(classname, "monster_bigmomma") == 0) ||
+				(strcmp(classname, "monster_bloater") == 0) ||
+				(strcmp(classname, "monster_bullchicken") == 0) ||
+				(strcmp(classname, "monster_gargantua") == 0) ||
+				(strcmp(classname, "monster_grunt_repel") == 0) ||
+				(strcmp(classname, "monster_headcrab") == 0) ||
+				(strcmp(classname, "monster_houndeye") == 0) ||
+				(strcmp(classname, "monster_human_assassin") == 0) ||
+				(strcmp(classname, "monster_human_grunt") == 0) ||
+				(strcmp(classname, "monster_ichthyosaur") == 0) ||
+				(strcmp(classname, "monster_miniturret") == 0) ||
+				(strcmp(classname, "monster_nihilanth") == 0) ||
+				(strcmp(classname, "monster_osprey") == 0) ||
+				(strcmp(classname, "monster_sentry") == 0) ||
+				(strcmp(classname, "monster_tentacle") == 0) ||
+				(strcmp(classname, "monster_turret") == 0) ||
+				(strcmp(classname, "monster_zombie") == 0) ||
+				(strcmp(classname, "monster_snark") == 0))
+			{
+				is_enemy = TRUE;
+			}
 			else 
 			{
 				continue;
@@ -1306,7 +1261,7 @@ edict_t *BotFindEnemy( bot_t *pBot )
 
       nearestdistance = 9999;
 
-	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+	  if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
 	  {
 		  BotLookForEnemy(pBot);
 	  }
@@ -1441,7 +1396,7 @@ edict_t *BotFindEnemy( bot_t *pBot )
       pBot->f_bot_see_enemy_time = -1;  // so we won't keep reloading
 
       if ((mod_id == VALVE_DLL) || (mod_id == GEARBOX_DLL) ||
-		  (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+		  (mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
       {
          pEdict->v.button |= IN_RELOAD;  // press reload button
       }
@@ -1476,6 +1431,11 @@ bool BotFireWeapon( Vector v_enemy, bot_t *pBot, int weapon_choice)
    float distance = v_enemy.Length();  // how far away is the enemy?
 
    if (mod_id == VALVE_DLL)
+   {
+      pSelect = &valve_weapon_select[0];
+      pDelay = &valve_fire_delay[0];
+   }
+   else if (mod_id == DECAY_DLL)
    {
       pSelect = &valve_weapon_select[0];
       pDelay = &valve_fire_delay[0];
@@ -1803,7 +1763,8 @@ bool BotFireWeapon( Vector v_enemy, bot_t *pBot, int weapon_choice)
              ((mod_id == HOLYWARS_DLL) && (iId == HW_WEAPON_JACKHAMMER)) ||
              ((mod_id == DMC_DLL) && (iId == DMC_WEAPON_AXE)) ||
 			 ((mod_id == CONFORCE_DLL) && (iId == CF_WEAPON_KNIFE)) ||
-			 ((mod_id == SVEN_DLL) && (iId == VALVE_WEAPON_CROWBAR)))
+			 ((mod_id == SVEN_DLL) && (iId == VALVE_WEAPON_CROWBAR)) ||
+			 ((mod_id == DECAY_DLL) && (iId == VALVE_WEAPON_CROWBAR)))
          {
             // check if bot needs to duck down to hit enemy...
             if (pBot->pBotEnemy->v.origin.z < (pEdict->v.origin.z - 30))
@@ -1907,7 +1868,8 @@ void BotShootAtEnemy( bot_t *pBot )
        ((mod_id == HOLYWARS_DLL) && (pBot->current_weapon.iId == HW_WEAPON_ROCKETLAUNCHER )) ||
        ((mod_id == DMC_DLL) && (pBot->current_weapon.iId == DMC_WEAPON_ROCKET1)) ||
 	   ((mod_id == CONFORCE_DLL) && (pBot->current_weapon.iId == CF_WEAPON_M72A1)) ||
-	   ((mod_id == SVEN_DLL) && (pBot->current_weapon.iId == VALVE_WEAPON_RPG)))
+	   ((mod_id == SVEN_DLL) && (pBot->current_weapon.iId == VALVE_WEAPON_RPG)) ||
+	   ((mod_id == DECAY_DLL) && (pBot->current_weapon.iId == VALVE_WEAPON_RPG)))
    {
       Vector v_src, v_dest;
       TraceResult tr;

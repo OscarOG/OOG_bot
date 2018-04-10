@@ -1,10 +1,10 @@
-//
-// HPB_bot - botman's High Ping Bastard bot
-//
-// (http://planethalflife.com/botman/)
-//
-// bot.h
-//
+//////////////////////////////////////////////
+// HPB_bot - botman's High Ping Bastard bot //
+//                                          //
+// (http://planethalflife.com/botman/)      //
+//                                          //
+// bot.h                                    //
+//////////////////////////////////////////////
 
 #ifndef BOT_H
 #define BOT_H
@@ -47,6 +47,7 @@ typedef void (*LINK_ENTITY_FUNC)(entvars_t *);
 #define CONFORCE_DLL	8	//	contra-force
 #define BB_DLL			9	//	brainbread
 #define SVEN_DLL		10	//	sven co-op 4.8
+#define DECAY_DLL		11	//	decay
 
 
 // define some function prototypes...

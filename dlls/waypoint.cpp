@@ -62,7 +62,7 @@ void WaypointDebug(void)
 {
    int y = 1, x = 1;
 
-   fp=fopen("HPB_bot.txt","a");
+   fp=fopen("OOG_bot.txt","a");
    fprintf(fp,"WaypointDebug: LINKED LIST ERROR!!!\n");
    fclose(fp);
 
@@ -184,7 +184,7 @@ void WaypointAddPath(short int add_index, short int path_index)
 
    if (p == NULL)
    {
-      ALERT(at_error, "HPB_bot - Error allocating memory for path!");
+      ALERT(at_error, "OOG_bot - Error allocating memory for path!");
    }
 
    p->index[0] = path_index;
@@ -831,7 +831,7 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
 
             if (distance < min_distance)
             {
-               strcpy(nearest_name, item_name);
+               strcpy_s(nearest_name, item_name);
 
                tfc_backpack_index = -1;  // "null" out backpack index
 
@@ -841,7 +841,7 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
             }
          }
 
-		 if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL))
+		 if ((mod_id == CONFORCE_DLL) || (mod_id == SVEN_DLL) || (mod_id == DECAY_DLL))
 		 {
 			 if ((strcmp(item_name, "trigger_changelevel") == 0) ||
 				 (strcmp(item_name, "trigger_teleport") == 0))
@@ -920,13 +920,19 @@ void WaypointSearchItems(edict_t *pEntity, Vector origin, int wpt_index)
          waypoints[wpt_index].flags |= W_FL_WEAPON;
       }
 
-	  if ((strncmp("trigger_changelevel", nearest_name, 19) == 0) ||
-		  (strncmp("trigger_teleport", nearest_name, 16) == 0))
+	  if (strncmp("trigger_changelevel", nearest_name, 19) == 0)
       {
          if (pEntity)
-            ClientPrint(pEntity, HUD_PRINTCONSOLE, "found a weapon!\n");
-         waypoints[wpt_index].flags |= W_FL_WEAPON;
+            ClientPrint(pEntity, HUD_PRINTCONSOLE, "found a changelevel!\n");
+         waypoints[wpt_index].flags |= W_FL_GOAL;
       }
+
+	  if (strncmp("trigger_teleport", nearest_name, 16) == 0)
+	  {
+		  if (pEntity)
+			  ClientPrint(pEntity, HUD_PRINTCONSOLE, "found a teleport!\n");
+		  waypoints[wpt_index].flags |= W_FL_PORTAL;
+	  }
    }
 
    if ((mod_id == TFC_DLL) &&
@@ -1377,7 +1383,7 @@ bool WaypointLoad(edict_t *pEntity)
          if (header.waypoint_file_version != WAYPOINT_VERSION)
          {
             if (pEntity)
-               ClientPrint(pEntity, HUD_PRINTNOTIFY, "Incompatible HPB bot waypoint file version!\nWaypoints not loaded!\n");
+               ClientPrint(pEntity, HUD_PRINTNOTIFY, "Incompatible OOG bot waypoint file version!\nWaypoints not loaded!\n");
 
             fclose(bfp);
             return FALSE;
@@ -1415,7 +1421,7 @@ bool WaypointLoad(edict_t *pEntity)
          {
             if (pEntity)
             {
-               sprintf(msg, "%s HPB bot waypoints are not for this map!\n", filename);
+               sprintf(msg, "%s OOG bot waypoints are not for this map!\n", filename);
                ClientPrint(pEntity, HUD_PRINTNOTIFY, msg);
             }
 
@@ -1427,7 +1433,7 @@ bool WaypointLoad(edict_t *pEntity)
       {
          if (pEntity)
          {
-            sprintf(msg, "%s is not a HPB bot waypoint file!\n", filename);
+            sprintf_s(msg, "%s is not a OOG bot waypoint file!\n", filename);
             ClientPrint(pEntity, HUD_PRINTNOTIFY, msg);
          }
 
@@ -1439,7 +1445,7 @@ bool WaypointLoad(edict_t *pEntity)
 
       if (need_rename)
       {
-         strcpy(mapname, STRING(gpGlobals->mapname));
+         strcpy_s(mapname, STRING(gpGlobals->mapname));
          strcat(mapname, ".HPB_wpt");
 
          UTIL_BuildFileName(new_filename, "maps", mapname);
@@ -1909,7 +1915,7 @@ void WaypointThink(edict_t *pEntity)
       if (g_path_waypoint)
       {
          // check if player is close enough to a waypoint and time to draw path...
-         if ((min_distance <= 80) && (f_path_time <= gpGlobals->time)) // 50
+         if ((min_distance <= 80) && (f_path_time <= gpGlobals->time)) // valor original 50
          {
             PATH *p;
 
@@ -2070,18 +2076,18 @@ void WaypointRouteInit(void)
 
             if (stat1.st_mtime < stat2.st_mtime)  // is .HPB_wpt older than .HPB_wpX file?
             {
-               sprintf(msg, "loading HPB bot waypoint paths for team %d\n", matrix+1);
+               sprintf_s(msg, "loading OOG bot waypoint paths for team %d\n", matrix+1);
                ALERT(at_console, msg);
 
                shortest_path[matrix] = (unsigned short *)malloc(sizeof(unsigned short) * array_size);
 
                if (shortest_path[matrix] == NULL)
-                  ALERT(at_error, "HPB_bot - Error allocating memory for shortest path!");
+                  ALERT(at_error, "OOG_bot - Error allocating memory for shortest path!");
 
                from_to[matrix] = (unsigned short *)malloc(sizeof(unsigned short) * array_size);
 
                if (from_to[matrix] == NULL)
-                  ALERT(at_error, "HPB_bot - Error allocating memory for from to matrix!");
+                  ALERT(at_error, "OOG_bot - Error allocating memory for from to matrix!");
 
                bfp = fopen(filename2, "rb");
 
@@ -2121,7 +2127,7 @@ void WaypointRouteInit(void)
                }
                else
                {
-                  ALERT(at_console, "HPB_bot - Error reading waypoint paths!\n");
+                  ALERT(at_console, "OOG_bot - Error reading waypoint paths!\n");
 
                   free(shortest_path[matrix]);
                   shortest_path[matrix] = NULL;
@@ -2136,18 +2142,18 @@ void WaypointRouteInit(void)
 
          if (shortest_path[matrix] == NULL)
          {
-            sprintf(msg, "calculating HPB bot waypoint paths for team %d...\n", matrix+1);
+            sprintf_s(msg, "calculating OOG bot waypoint paths for team %d...\n", matrix+1);
             ALERT(at_console, msg);
 
             shortest_path[matrix] = (unsigned short *)malloc(sizeof(unsigned short) * array_size);
 
             if (shortest_path[matrix] == NULL)
-               ALERT(at_error, "HPB_bot - Error allocating memory for shortest path!");
+               ALERT(at_error, "OOG_bot - Error allocating memory for shortest path!");
 
             from_to[matrix] = (unsigned short *)malloc(sizeof(unsigned short) * array_size);
 
             if (from_to[matrix] == NULL)
-               ALERT(at_error, "HPB_bot - Error allocating memory for from to matrix!");
+               ALERT(at_error, "OOG_bot - Error allocating memory for from to matrix!");
 
             pShortestPath = shortest_path[matrix];
             pFromTo = from_to[matrix];
@@ -2185,7 +2191,7 @@ void WaypointRouteInit(void)
 
                               if (distance > REACHABLE_RANGE)
                               {
-                                 sprintf(msg, "Waypoint path distance > %4.1f at from %d to %d\n",
+                                 sprintf_s(msg, "Waypoint path distance > %4.1f at from %d to %d\n",
                                               REACHABLE_RANGE, row, index);
                                  ALERT(at_console, msg);
                               }
@@ -2227,7 +2233,7 @@ void WaypointRouteInit(void)
                   // if couldn't write enough data, close file and delete it
 
                   fclose(bfp);
-                  unlink(filename2);
+                  _unlink(filename2);
                }
                else
                {
@@ -2244,10 +2250,10 @@ void WaypointRouteInit(void)
             }
             else
             {
-               ALERT(at_console, "HPB_bot - Error writing waypoint paths!\n");
+               ALERT(at_console, "OOG_bot - Error writing waypoint paths!\n");
             }
 
-            sprintf(msg, "HPB bot waypoint path calculations for team %d complete!\n",matrix+1);
+            sprintf_s(msg, "OOG bot waypoint path calculations for team %d complete!\n",matrix+1);
             ALERT(at_console, msg);
          }
       }

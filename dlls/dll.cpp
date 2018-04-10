@@ -19,7 +19,7 @@
 
 
 #define VER_MAJOR 3
-#define VER_MINOR 1
+#define VER_MINOR 2
 
 
 #define MENU_NONE  0
@@ -113,7 +113,7 @@ float respawn_time = 0.0;
 bool spawn_time_reset = FALSE;
 
 
-cvar_t sv_bot = {"HPB_bot",""};
+cvar_t sv_bot = {"OOG_bot",""};
 
 char *show_menu_none = {" "};
 char *show_menu_1 =
@@ -177,7 +177,7 @@ int DispatchSpawn( edict_t *pent )
 
       if (debug_engine)
       {
-         fp=fopen("HPB_bot.txt","a");
+         fp=fopen("OOG_bot.txt","a");
          fprintf(fp, "DispatchSpawn: %x %s\n",pent,pClassname);
          if (pent->v.model != 0)
             fprintf(fp, " model=%s\n",STRING(pent->v.model));
@@ -289,7 +289,7 @@ void DispatchKeyValue( edict_t *pentKeyvalue, KeyValueData *pkvd )
 
    if (debug_engine)
    {
-      fp=fopen("HPB_bot.txt","a"); fprintf(fp, "DispatchKeyValue: %x %s=%s\n",pentKeyvalue,pkvd->szKeyName,pkvd->szValue); fclose(fp);
+      fp=fopen("OOG_bot.txt","a"); fprintf(fp, "DispatchKeyValue: %x %s=%s\n",pentKeyvalue,pkvd->szKeyName,pkvd->szValue); fclose(fp);
    }
 
    if (mod_id == TFC_DLL)
@@ -492,7 +492,7 @@ BOOL ClientConnect( edict_t *pEntity, const char *pszName, const char *pszAddres
       int i;
       int count = 0;
 
-      if (debug_engine) { fp=fopen("HPB_bot.txt","a"); fprintf(fp, "ClientConnect: pent=%x name=%s\n",pEntity,pszName); fclose(fp); }
+      if (debug_engine) { fp=fopen("OOG_bot.txt","a"); fprintf(fp, "ClientConnect: pent=%x name=%s\n",pEntity,pszName); fclose(fp); }
 
       // check if this client is the listen server client
       if (strcmp(pszAddress, "loopback") == 0)
@@ -543,7 +543,7 @@ void ClientDisconnect( edict_t *pEntity )
    {
       int i;
 
-      if (debug_engine) { fp=fopen("HPB_bot.txt","a"); fprintf(fp, "ClientDisconnect: %x\n",pEntity); fclose(fp); }
+      if (debug_engine) { fp=fopen("OOG_bot.txt","a"); fprintf(fp, "ClientDisconnect: %x\n",pEntity); fclose(fp); }
 
       i = 0;
       while ((i < 32) && (clients[i] != pEntity))
@@ -573,13 +573,13 @@ void ClientDisconnect( edict_t *pEntity )
 
 void ClientKill( edict_t *pEntity )
 {
-   if (debug_engine) { fp=fopen("HPB_bot.txt","a"); fprintf(fp, "ClientKill: %x\n",pEntity); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt","a"); fprintf(fp, "ClientKill: %x\n",pEntity); fclose(fp); }
    (*other_gFunctionTable.pfnClientKill)(pEntity);
 }
 
 void ClientPutInServer( edict_t *pEntity )
 {
-   if (debug_engine) { fp=fopen("HPB_bot.txt","a"); fprintf(fp, "ClientPutInServer: %x\n",pEntity); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt","a"); fprintf(fp, "ClientPutInServer: %x\n",pEntity); fclose(fp); }
 
    int i = 0;
 
@@ -604,7 +604,7 @@ void ClientCommand( edict_t *pEntity )
 
    if (debug_engine)
    {
-      fp=fopen("HPB_bot.txt","a"); fprintf(fp,"ClientCommand: %s",pcmd);
+      fp=fopen("OOG_bot.txt","a"); fprintf(fp,"ClientCommand: %s",pcmd);
       if ((arg1 != NULL) && (*arg1 != 0))
          fprintf(fp," %s", arg1);
       if ((arg2 != NULL) && (*arg2 != 0))
@@ -927,7 +927,7 @@ void ClientCommand( edict_t *pEntity )
 
             WaypointAdd(pEntity);
          }
-         else if (FStrEq(arg1, "delete"))
+         else if (FStrEq(arg1, "del"))
          {
             if (!g_waypoint_on)
                g_waypoint_on = TRUE;  // turn waypoints on if off
@@ -1032,19 +1032,19 @@ void ClientCommand( edict_t *pEntity )
 
             ClientPrint(pEntity, HUD_PRINTNOTIFY, "pathwaypoint is DISABLED\n");
          }
-         else if (FStrEq(arg1, "create1"))
+         else if (FStrEq(arg1, "add1"))
          {
             WaypointCreatePath(pEntity, 1);
          }
-         else if (FStrEq(arg1, "create2"))
+         else if (FStrEq(arg1, "add2"))
          {
             WaypointCreatePath(pEntity, 2);
          }
-         else if (FStrEq(arg1, "remove1"))
+         else if (FStrEq(arg1, "del1"))
          {
             WaypointRemovePath(pEntity, 1);
          }
-         else if (FStrEq(arg1, "remove2"))
+         else if (FStrEq(arg1, "del2"))
          {
             WaypointRemovePath(pEntity, 2);
          }
@@ -1321,7 +1321,7 @@ void ClientCommand( edict_t *pEntity )
                        pent->v.origin.z);
             ClientPrint(pEntity, HUD_PRINTNOTIFY, str);
 
-            FILE *fp=fopen("HPB_bot.txt", "a");
+            FILE *fp=fopen("OOG_bot.txt", "a");
             fprintf(fp, "ClientCommmand: search %s", str);
             fclose(fp);
          }
@@ -1367,7 +1367,7 @@ void ClientCommand( edict_t *pEntity )
 
 void ClientUserInfoChanged( edict_t *pEntity, char *infobuffer )
 {
-   if (debug_engine) { fp=fopen("HPB_bot.txt", "a"); fprintf(fp, "ClientUserInfoChanged: pEntity=%x infobuffer=%s\n", pEntity, infobuffer); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt", "a"); fprintf(fp, "ClientUserInfoChanged: pEntity=%x infobuffer=%s\n", pEntity, infobuffer); fclose(fp); }
 
    (*other_gFunctionTable.pfnClientUserInfoChanged)(pEntity, infobuffer);
 }
@@ -1416,7 +1416,7 @@ void StartFrame( void )
          // check if mapname_bot.cfg file exists...
 
          strcpy(mapname, STRING(gpGlobals->mapname));
-         strcat(mapname, "_HPB_bot.cfg");
+         strcat(mapname, "_OOG_bot.cfg");
 
          UTIL_BuildFileName(filename, "maps", mapname);
 
@@ -1603,7 +1603,7 @@ void StartFrame( void )
             // respawn 1 bot then wait a while (otherwise engine crashes)
             if ((mod_id == VALVE_DLL) || (mod_id == SVEN_DLL) ||
 				((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect == NULL)) ||
-                (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL))
+                (mod_id == HOLYWARS_DLL) || (mod_id == DMC_DLL) || (mod_id == DECAY_DLL))
             {
                char c_skill[2];
                char c_topcolor[4];
@@ -1667,17 +1667,17 @@ void StartFrame( void )
 
       if (g_GameRules)
       {
-         if (need_to_open_cfg)  // have we open HPB_bot.cfg file yet?
+         if (need_to_open_cfg)  // have we open OOG_bot.cfg file yet?
          {
             char filename[256];
             char mapname[64];
 
             need_to_open_cfg = FALSE;  // only do this once!!!
 
-            // check if mapname_HPB_bot.cfg file exists...
+            // check if mapname_OOG_bot.cfg file exists...
 
             strcpy(mapname, STRING(gpGlobals->mapname));
-            strcat(mapname, "_HPB_bot.cfg");
+            strcat(mapname, "_OOG_bot.cfg");
 
             UTIL_BuildFileName(filename, "maps", mapname);
 
@@ -1688,7 +1688,7 @@ void StartFrame( void )
             }
             else
             {
-               UTIL_BuildFileName(filename, "HPB_bot.cfg", NULL);
+               UTIL_BuildFileName(filename, "OOG_bot.cfg", NULL);
 
                sprintf(msg, "Executing %s\n", filename);
                ALERT( at_console, msg );
@@ -1696,7 +1696,7 @@ void StartFrame( void )
                bot_cfg_fp = fopen(filename, "r");
 
                if (bot_cfg_fp == NULL)
-                  ALERT( at_console, "HPB_bot.cfg file not found\n" );
+                  ALERT( at_console, "OOG_bot.cfg file not found\n" );
             }
 
             if (IsDedicatedServer)
@@ -1725,7 +1725,7 @@ void StartFrame( void )
          if ((bot_cfg_fp) &&
              (bot_cfg_pause_time >= 1.0) && (bot_cfg_pause_time <= gpGlobals->time))
          {
-            // process HPB_bot.cfg file options...
+            // process OOG_bot.cfg file options...
             ProcessBotCfgFile();
          }
 
@@ -1736,7 +1736,7 @@ void StartFrame( void )
       {
          check_server_cmd = gpGlobals->time + 1.0;
 
-         char *cvar_bot = (char *)CVAR_GET_STRING( "HPB_bot" );
+         char *cvar_bot = (char *)CVAR_GET_STRING( "OOG_bot" );
 
          if ( cvar_bot && cvar_bot[0] )
          {
@@ -1826,7 +1826,7 @@ void StartFrame( void )
                printf(msg);
             }
 
-            CVAR_SET_STRING("HPB_bot", "");
+            CVAR_SET_STRING("OOG_bot", "");
          }
       }
 
@@ -1874,7 +1874,7 @@ const char *GetGameDescription( void )
 
 void PlayerCustomization( edict_t *pEntity, customization_t *pCust )
 {
-   if (debug_engine) { fp=fopen("HPB_bot.txt", "a"); fprintf(fp, "PlayerCustomization: %x\n",pEntity); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt", "a"); fprintf(fp, "PlayerCustomization: %x\n",pEntity); fclose(fp); }
 
    (*other_gFunctionTable.pfnPlayerCustomization)(pEntity, pCust);
 }
@@ -1971,7 +1971,7 @@ void CreateInstancedBaselines( void )
 
 int InconsistentFile( const edict_t *player, const char *filename, char *disconnect_message )
 {
-   if (debug_engine) { fp=fopen("HPB_bot.txt", "a"); fprintf(fp, "InconsistentFile: %x filename=%s\n",player,filename); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt", "a"); fprintf(fp, "InconsistentFile: %x filename=%s\n",player,filename); fclose(fp); }
 
    return (*other_gFunctionTable.pfnInconsistentFile)(player, filename, disconnect_message);
 }
@@ -2126,7 +2126,7 @@ void FakeClientCommand(edict_t *pBot, char *arg1, char *arg2, char *arg3)
    if (arg3)
       strcpy(&g_argv[192], arg3);
 
-   if (debug_engine) { fp=fopen("HPB_bot.txt","a"); fprintf(fp,"FakeClientCommand=%s\n",g_argv); fclose(fp); }
+   if (debug_engine) { fp=fopen("OOG_bot.txt","a"); fprintf(fp,"FakeClientCommand=%s\n",g_argv); fclose(fp); }
 
    // allow the MOD DLL to execute the ClientCommand...
    ClientCommand(pBot);

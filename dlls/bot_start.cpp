@@ -299,6 +299,10 @@ void BotStartGame( bot_t *pBot )
    {
 	   pBot->not_started = 0;
    }
+   else if (mod_id == DECAY_DLL)
+   {
+	   pBot->not_started = 0;
+   }
    else if ((mod_id == GEARBOX_DLL) && (pent_info_ctfdetect != NULL))
    {
       // handle Opposing Force CTF stuff here...

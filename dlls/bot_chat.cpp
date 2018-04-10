@@ -61,7 +61,7 @@ void LoadBotChat(void)
       recent_bot_whine[i] = -1;
    }
 
-   UTIL_BuildFileName(filename, "HPB_bot_chat.txt", NULL);
+   UTIL_BuildFileName(filename, "OOG_bot_chat.txt", NULL);
 
    bfp = fopen(filename, "r");
 

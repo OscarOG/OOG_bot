@@ -2,7 +2,7 @@
 
 I´m a Half-Life fan and one of the multiple MODs i loved to play is Contra-Force.
 
-Contra-Force is a mix between Sven Co-op and Counter-Strike, more like a
+Contra-Force was a mix between Sven Co-op and Counter-Strike, more like a
 cooperative version of Counter-Strike, a realistic and dificult MOD where players
 cooperate to fight monsters in a simulated real gameplay.
 

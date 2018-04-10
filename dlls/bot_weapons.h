@@ -1,10 +1,10 @@
-//
-// HPB_bot - botman's High Ping Bastard bot
-//
-// (http://planethalflife.com/botman/)
-//
-// bot_weapons.h
-//
+//////////////////////////////////////////////
+// HPB_bot - botman's High Ping Bastard bot //
+//                                          //
+// (http://planethalflife.com/botman/)      //
+//                                          //
+// bot_weapons.h                            //
+//////////////////////////////////////////////
 
 #ifndef BOT_WEAPONS_H
 #define BOT_WEAPONS_H

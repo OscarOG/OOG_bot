@@ -51,7 +51,6 @@ Vector UTIL_VecToAngles( const Vector &vec )
    return Vector(rgflVecOut);
 }
 
-
 // Overloaded to add IGNORE_GLASS
 void UTIL_TraceLine( const Vector &vecStart, const Vector &vecEnd, IGNORE_MONSTERS igmon, IGNORE_GLASS ignoreGlass, edict_t *pentIgnore, TraceResult *ptr )
 {
@@ -607,9 +606,11 @@ void UTIL_BuildFileName(char *filename, char *arg1, char *arg2)
       strcpy(filename, "brainbread/");
    else if (mod_id == SVEN_DLL)
       strcpy(filename, "svencoop/");
+   else if (mod_id == DECAY_DLL)
+      strcpy(filename, "decay/");
    else
    {
-      ALERT( at_error, "HPB_bot - Error in UTIL_BuildFileName (mod ID is unknown)!" );
+      ALERT( at_error, "OOG_bot - Error in UTIL_BuildFileName (mod ID is unknown)!" );
 
       filename[0] = 0;
       return;

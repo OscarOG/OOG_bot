@@ -33,7 +33,7 @@ globalvars_t  *gpGlobals;
 char *g_argv;
 
 static FILE *fp;
-char z_welcome_msg[] = "HPB bot - OOG";
+char z_welcome_msg[] = "OOG bot";
 
 
 GETENTITYAPI other_GetEntityAPI = NULL;
@@ -107,7 +107,7 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
       {
          // Error getting directory name!
 
-   		ALERT( at_error, "HPB_bot - Error determining MOD directory name!" );
+   		ALERT( at_error, "OOG_bot - Error determining MOD directory name!" );
       }
 
       pos++;
@@ -201,6 +201,13 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
       strcpy(game_dll_filename, "svencoop\\dlls\\hl.dll");
 #endif
    }
+   else if (strcmpi(mod_name, "decay") == 0)
+   {
+      mod_id = DECAY_DLL;
+#ifndef __linux__
+      strcpy(game_dll_filename, "decay\\dlls\\decay.dll");
+#endif
+   }
 
    if (game_dll_filename[0])
    {
@@ -214,7 +221,7 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
    {
       // Directory error or Unsupported MOD!
 
-		ALERT( at_error, "HPB_bot - MOD dll not found (or unsupported MOD)!" );
+		ALERT( at_error, "OOG_bot - MOD dll not found (or unsupported MOD)!" );
 
       return;
    }
@@ -232,7 +239,7 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
    {
       // Can't find GetEntityAPI!
 
-		ALERT( at_error, "HPB_bot - Can't get MOD's GetEntityAPI!" );
+		ALERT( at_error, "OOG_bot - Can't get MOD's GetEntityAPI!" );
    }
 
    other_GetNewDLLFunctions = (GETNEWDLLFUNCTIONS)GetProcAddress(h_Library, "GetNewDLLFunctions");
@@ -241,7 +248,7 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
 //   {
 //      // Can't find GetNewDLLFunctions!
 //
-//		ALERT( at_error, "HPB_bot - Can't get MOD's GetNewDLLFunctions!" );
+//		ALERT( at_error, "OOG_bot - Can't get MOD's GetNewDLLFunctions!" );
 //   }
 
    other_GiveFnptrsToDll = (GIVEFNPTRSTODLL)GetProcAddress(h_Library, "GiveFnptrsToDll");
@@ -250,7 +257,7 @@ extern "C" DLLEXPORT GiveFnptrsToDll( enginefuncs_t* pengfuncsFromEngine, global
    {
       // Can't find GiveFnptrsToDll!
 
-		ALERT( at_error, "HPB_bot - Can't get MOD's GiveFnptrsToDll!" );
+		ALERT( at_error, "OOG_bot - Can't get MOD's GiveFnptrsToDll!" );
    }
 
 
