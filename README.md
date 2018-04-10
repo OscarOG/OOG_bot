@@ -29,23 +29,23 @@ a decent bots to this MOD, either this version or a metamod one.
 
 Commands are:
 
-addbot    -   add a bot to the game
+<b>addbot</b>    -   add a bot to the game
 
 
-waypoint on   -   show waypoints (if any)
+<b>waypoint on</b>   -   show waypoints (if any)
 
-waypoint add    -   add a waypoint in current user position
+<b>waypoint add</b>    -   add a waypoint in current user position
 
-waypoint del    -   delete current nearest to player waypoint
+<b>waypoint del</b>    -   delete current nearest to player waypoint
 
-waypoint menu   -   show a menu for current nearest to player waypoint for special waypoint flags
+<b>waypoint menu</b>   -   show a menu for current nearest to player waypoint for special waypoint flags
 
 
-pathwaypoint on   -   show paths from one waypoint to other
+<b>pathwaypoint on</b>   -   show paths from one waypoint to other
 
-pathwaypoint add1 / add2    -   manually add a path from waypoint A (add1) to waypoint B (add2)
+<b>pathwaypoint add1</b> / <b>add2</b>    -   manually add a path from waypoint A (add1) to waypoint B (add2)
 
-pathwaypoint del1 / del2    -   manually delete a path from waypoint A (del1) to waypoint B (del2)
+<b>pathwaypoint del1</b> / <b>del2</b>    -   manually delete a path from waypoint A (del1) to waypoint B (del2)
 
 
 Waypointing is a very important part for a good bot handling on maps.
